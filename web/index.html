@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="zh-CN">
 <head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>xBloom 咖啡豆仓</title>
 <style>
 :root{--bg:#f5f1ea;--panel:#fffdf9;--text:#28221e;--muted:#776e66;--line:#e6ddd2;--accent:#885b3d;--soft:#f1e6da;--ok:#476b53;--bad:#a34a3a;--warn:#9b6d35}
@@ -189,6 +189,66 @@ body{padding-bottom:92px}
 .dripper-preset-badge{display:inline-flex;padding:3px 7px;border-radius:999px;background:#efe2d5;color:#805435;font-size:11px;font-weight:800;margin-left:6px}
 @media(max-width:720px){.sync-header-card{align-items:flex-start;flex-direction:column}.resting-rule-row{grid-template-columns:1fr 82px 24px}.form-grid.intake-core{grid-template-columns:1fr}.intake-steps{overflow-x:auto;flex-wrap:nowrap}.intake-step{min-width:118px}}
 </style>
+
+<!-- XB_IOS_P0_BEGIN: iOS Capacitor-specific safe area & no-clipping; leave Web styling intact -->
+<script>
+(function () {
+  var cap = window.Capacitor;
+  var ios = /iPhone|iPad|iPod/.test(navigator.userAgent);
+  var native = !!(cap && (typeof cap.isNativePlatform === 'function' ? cap.isNativePlatform() : true));
+  if (ios && (native || location.protocol === 'capacitor:')) {
+    document.documentElement.classList.add('xb-ios-p0');
+  }
+})();
+</script>
+<style>
+/* Capacitor/iOS only: never change browser Web UI. */
+html.xb-ios-p0 { width:100%; max-width:100%; overflow-x:clip; }
+html.xb-ios-p0 body {
+  width:100%; max-width:100%; min-width:0; overflow-x:clip;
+  /* Existing WKWebView overlays iOS status bar: explicitly reserve top inset.
+     min fallback is needed on WebViews reporting env(safe-area-inset-top)=0. */
+  padding-top:max(54px, env(safe-area-inset-top, 0px));
+  padding-bottom:0;
+}
+html.xb-ios-p0 .wrap {
+  box-sizing:border-box; width:100%; min-width:0; max-width:100%;
+  padding-left:max(12px, env(safe-area-inset-left, 0px));
+  padding-right:max(12px, env(safe-area-inset-right, 0px));
+  /* Reserve space for fixed nav including home indicator. */
+  padding-bottom:calc(88px + env(safe-area-inset-bottom, 0px));
+}
+html.xb-ios-p0 .bottom-nav {
+  box-sizing:border-box; width:100%; max-width:100%;
+  padding-left:max(12px, env(safe-area-inset-left, 0px));
+  padding-right:max(12px, env(safe-area-inset-right, 0px));
+  padding-bottom:calc(10px + env(safe-area-inset-bottom, 0px));
+}
+html.xb-ios-p0 .bottom-nav button {min-width:0; padding-left:5px; padding-right:5px;}
+/* Replace 4 * min-width:118px with four responsive steps. No DOM removal. */
+html.xb-ios-p0 .intake-steps {
+  display:grid; grid-template-columns:repeat(4,minmax(0,1fr));
+  overflow-x:visible; width:100%; min-width:0; max-width:100%; gap:5px;
+}
+html.xb-ios-p0 .intake-step {
+  min-width:0!important; width:100%; max-width:100%;
+  white-space:normal; overflow-wrap:anywhere; word-break:normal;
+  padding:8px 2px; font-size:clamp(9px,2.5vw,11px); line-height:1.25;
+  touch-action:manipulation;
+}
+html.xb-ios-p0 .card,
+html.xb-ios-p0 .detail,
+html.xb-ios-p0 .detail-pane,
+html.xb-ios-p0 .form-grid,
+html.xb-ios-p0 .sync-slot-grid,
+html.xb-ios-p0 .capture-panel {min-width:0; max-width:100%;}
+html.xb-ios-p0 img {max-width:100%;}
+/* Keep existing intentional horizontal scroll: tabs and pour cards. */
+html.xb-ios-p0 .settings-tabs,
+html.xb-ios-p0 .pour-card-grid {max-width:100%;}
+@media (max-width:375px){html.xb-ios-p0 .intake-step{font-size:9px;padding:7px 1px;}}
+</style>
+<!-- XB_IOS_P0_END -->
 </head>
 <body>
 <div class="wrap">
