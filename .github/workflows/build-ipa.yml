@@ -1,0 +1,57 @@
+name: Build xBloom iOS (unsigned)
+
+on:
+  workflow_dispatch:
+  push:
+    tags:
+      - "v*"
+
+concurrency:
+  group: build-ipa
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: macos-15
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Sync Capacitor (web -> native + pod install)
+        run: npx cap sync ios
+
+      - name: Build unsigned .app
+        run: |
+          xcodebuild -workspace ios/App/App.xcworkspace \
+            -scheme App \
+            -configuration Release \
+            -derivedDataPath build \
+            CODE_SIGNING_ALLOWED=NO \
+            build
+
+      - name: Package .ipa (Payload/App.app, unsigned)
+        run: |
+          APP="build/Build/Products/Release-iphoneos/App.app"
+          mkdir -p build/ipa/Payload
+          cp -R "$APP" build/ipa/Payload/
+          cd build/ipa && zip -qry ../../xbloom-ios-unsigned.ipa Payload
+          cd ../Build/Products/Release-iphoneos
+          zip -qry "$GITHUB_WORKSPACE/xbloom-ios-unsigned.app.zip" App.app
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: xbloom-ios-build
+          path: |
+            xbloom-ios-unsigned.ipa
+            xbloom-ios-unsigned.app.zip
+          retention-days: 7
