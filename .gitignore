@@ -7,3 +7,5 @@ ios/App/Pods/
 ios/App/App/developers_*.json
 **/xcuserdata/
 **/*.xcuserstate
+
+*.bak
