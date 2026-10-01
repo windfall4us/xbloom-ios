@@ -355,6 +355,94 @@ html.xb-ios-p0.xb-server-bridge-ready .xb-p0b-server-float {display:none!importa
   html.xb-ios-p0 body.ios-app .bottom-nav *{transition:none!important}
 }
 </style>
+<style id="XB_IOS_P1D_V015">
+/* v0.1.5 P1D: native-only visual hierarchy; all existing elements/handlers intact. */
+@media(max-width:720px){
+  html.xb-ios-p0 body.ios-app #detailExtractionPane,
+  html.xb-ios-p0 body.ios-app #detailAdjustPane{min-width:0;max-width:100%;}
+  html.xb-ios-p0 body.ios-app #detailExtractionPane main,
+  html.xb-ios-p0 body.ios-app #detailAdjustPane main{min-width:0;max-width:100%;}
+  html.xb-ios-p0 body.ios-app #detailExtractionPane main > .card,
+  html.xb-ios-p0 body.ios-app #detailAdjustPane main > .card{
+    padding:14px 13px;border-radius:15px;min-width:0;
+  }
+  html.xb-ios-p0 body.ios-app #detailExtractionPane h3,
+  html.xb-ios-p0 body.ios-app #detailAdjustPane h3{
+    font-size:16px;line-height:1.35;margin:0 0 4px;
+  }
+  html.xb-ios-p0 body.ios-app #detailExtractionPane .detail-section-head,
+  html.xb-ios-p0 body.ios-app #detailAdjustPane .detail-section-head{
+    gap:8px;align-items:flex-start;
+  }
+  html.xb-ios-p0 body.ios-app #extractionSourceHint,
+  html.xb-ios-p0 body.ios-app #detailAdjustPane .detail-section-head .muted{
+    font-size:12px;line-height:1.4;overflow-wrap:anywhere;
+  }
+  /* Current version, dripper and Ready stay visible: no data is hidden. */
+  html.xb-ios-p0 body.ios-app #readyBadge{flex-shrink:0;max-width:100%;}
+  html.xb-ios-p0 body.ios-app #detailExtractionPane .session-dripper{
+    display:grid;grid-template-columns:minmax(0,1fr);gap:7px;margin-top:11px;
+  }
+  html.xb-ios-p0 body.ios-app #detailExtractionPane .session-dripper b{font-size:12px;}
+  html.xb-ios-p0 body.ios-app #extractionDripperSelect{
+    min-width:0;width:100%;max-width:100%;min-height:42px;
+  }
+  html.xb-ios-p0 body.ios-app #adaptDripperBtn{width:100%;min-height:42px;}
+  /* Compact core parameters without reducing label legibility. */
+  html.xb-ios-p0 body.ios-app #extractMetricCards{
+    grid-template-columns:repeat(3,minmax(0,1fr));gap:0;
+    padding:6px 3px;margin-top:11px;border-radius:13px;
+  }
+  html.xb-ios-p0 body.ios-app #extractMetricCards .extract-metric-card{
+    padding:10px 3px;min-width:0;
+  }
+  html.xb-ios-p0 body.ios-app #extractMetricCards .extract-metric-card:nth-child(3n){border-right:0;}
+  html.xb-ios-p0 body.ios-app #extractMetricCards .extract-metric-card span{
+    font-size:11px;line-height:1.35;overflow-wrap:anywhere;
+  }
+  html.xb-ios-p0 body.ios-app #extractMetricCards .extract-metric-card b{
+    font-size:clamp(15px,4.8vw,21px);line-height:1.25;
+    display:block;overflow-wrap:anywhere;
+  }
+  /* Pour cards remain horizontal and scrollable within the pour region. */
+  html.xb-ios-p0 body.ios-app #pourCards{
+    max-width:100%;min-width:0;overscroll-behavior-x:contain;
+    -webkit-overflow-scrolling:touch;scroll-snap-type:x proximity;
+  }
+  html.xb-ios-p0 body.ios-app #detailExtractionPane .recipe-tool-details>summary{
+    min-height:44px;padding:12px 14px;
+  }
+  /* Adjustment: action first; historical details retain original folded semantics. */
+  html.xb-ios-p0 body.ios-app #detailAdjustPane .adjust-context{
+    margin-top:9px;gap:6px;
+  }
+  html.xb-ios-p0 body.ios-app #detailAdjustPane .adjust-context .status{
+    font-size:12px;max-width:100%;overflow-wrap:anywhere;
+  }
+  html.xb-ios-p0 body.ios-app #latestTastingBox,
+  html.xb-ios-p0 body.ios-app #adjustAdviceBox{
+    border-radius:12px;padding:11px 12px;line-height:1.55;
+    overflow-wrap:anywhere;
+  }
+  html.xb-ios-p0 body.ios-app #detailAdjustPane #recordTastingTopBtn{
+    width:100%;min-height:44px;
+  }
+  html.xb-ios-p0 body.ios-app #detailAdjustPane .box.next{
+    min-width:0;max-width:100%;overflow-wrap:anywhere;
+  }
+  html.xb-ios-p0 body.ios-app #reason{font-size:12px;line-height:1.5;overflow-wrap:anywhere;}
+  html.xb-ios-p0 body.ios-app #detailAdjustPane .compact-details>summary{
+    min-height:44px;padding:11px 2px;display:block;line-height:1.5;
+  }
+  html.xb-ios-p0 body.ios-app #detailAdjustPane .history-pick-card{
+    min-width:0;max-width:100%;overflow-wrap:anywhere;
+  }
+}
+@media(max-width:350px){
+  html.xb-ios-p0 body.ios-app #extractMetricCards .extract-metric-card b{font-size:15px;}
+  html.xb-ios-p0 body.ios-app #extractMetricCards .extract-metric-card span{font-size:10px;}
+}
+</style>
 </head>
 <body>
 <div class="wrap">
