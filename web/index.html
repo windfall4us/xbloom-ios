@@ -302,6 +302,59 @@ html.xb-ios-p0.xb-server-bridge-ready #xbIosServerSettingsShortcut { display:blo
 /* Only hide floating controls after verified button bridge; never hide unknown server controls. */
 html.xb-ios-p0.xb-server-bridge-ready .xb-p0b-server-float {display:none!important;}
 </style>
+<style id="XB_IOS_P1C_V014">
+/* Only Capacitor app with activated P0 + P1 gates. Preserve all button IDs and handlers. */
+@media (max-width:720px) {
+  html.xb-ios-p0 body.ios-app .top {margin:0 0 13px;gap:4px;}
+  html.xb-ios-p0 body.ios-app .top h1 {font-size:clamp(23px,6vw,30px);line-height:1.2;letter-spacing:-.025em;overflow-wrap:anywhere;}
+  html.xb-ios-p0 body.ios-app .settings-back,
+  html.xb-ios-p0 body.ios-app .back button {font-size:13px;min-height:39px;padding:8px 11px;}
+  /* Icon above unchanged semantic text; existing active class is authoritative. */
+  html.xb-ios-p0 body.ios-app .bottom-nav {
+    gap:4px;padding:7px max(10px,env(safe-area-inset-right,0px))
+      calc(7px + env(safe-area-inset-bottom,0px)) max(10px,env(safe-area-inset-left,0px));
+    align-items:stretch;
+  }
+  html.xb-ios-p0 body.ios-app .bottom-nav button {
+    display:flex;flex-direction:column;gap:2px;align-items:center;justify-content:center;
+    border-radius:13px;padding:7px 4px;min-width:0;min-height:55px;
+    font-size:12px;line-height:1.2;color:var(--muted);font-weight:650;
+    -webkit-tap-highlight-color:transparent;
+  }
+  html.xb-ios-p0 body.ios-app .bottom-nav button::before {
+    display:block;height:23px;line-height:23px;font-size:20px;font-weight:500;
+  }
+  html.xb-ios-p0 body.ios-app #navAddBtn::before{content:"＋"}
+  html.xb-ios-p0 body.ios-app #navWarehouseBtn::before{content:"☕";font-size:19px}
+  html.xb-ios-p0 body.ios-app #navSyncBtn::before{content:"☁"}
+  html.xb-ios-p0 body.ios-app #navSettingsBtn::before{content:"⚙"}
+  html.xb-ios-p0 body.ios-app .bottom-nav button.active{
+    color:var(--accent);border-color:#dac4b3;background:#efe2d6;
+  }
+  /* Status: term is compact, long data is allowed to wrap and be selected. */
+  html.xb-ios-p0 body.ios-app #settingsStatusPane .validation {padding:11px;border-radius:14px;}
+  html.xb-ios-p0 body.ios-app #settingsStatusPane .row {
+    display:grid;grid-template-columns:minmax(78px,34%) minmax(0,1fr);
+    column-gap:10px;align-items:start;line-height:1.5;padding:9px 0;
+  }
+  html.xb-ios-p0 body.ios-app #settingsStatusPane .row > :first-child {
+    color:var(--muted);font-size:12px;min-width:0;
+  }
+  html.xb-ios-p0 body.ios-app #settingsStatusPane .row > :last-child {
+    font-size:12px;min-width:0;max-width:100%;overflow-wrap:anywhere;
+    word-break:break-word;flex:none;text-align:left;
+  }
+  html.xb-ios-p0 body.ios-app #settingsStatusPane .validation>b{
+    display:block;font-size:15px;padding-bottom:5px;
+  }
+}
+@media(max-width:350px){
+  html.xb-ios-p0 body.ios-app .bottom-nav button{font-size:11px}
+}
+@media(prefers-reduced-motion:reduce){
+  html.xb-ios-p0 body.ios-app .bottom-nav *{transition:none!important}
+}
+</style>
 </head>
 <body>
 <div class="wrap">
