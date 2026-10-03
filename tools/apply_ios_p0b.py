@@ -19,13 +19,13 @@ style=r'''<style id="XB_IOS_P0B_V013">
 html.xb-ios-p0 { --xb-safe-top:max(54px, env(safe-area-inset-top, 0px)); }
 html.xb-ios-p0::before {
   content:""; position:fixed; left:0;right:0;top:0;
-  height:var(--xb-safe-top);background:var(--bg);
+  height:var(--xb-safe-top);background:#f7f2eb;
   z-index:48; pointer-events:none;
 }
 /* The native settings shortcut is ONLY shown after a working server button is located. */
 html.xb-ios-p0 #xbIosServerSettingsShortcut {
   display:none; width:100%; margin:10px 0 14px; box-sizing:border-box;
-  background:var(--bg); color:#725039; text-align:left;
+  background:#f7f2eb; color:#725039; text-align:left;
   border:1px solid #ded2c4; padding:12px 14px; border-radius:12px;
   font:inherit; font-weight:700; min-height:44px;
 }

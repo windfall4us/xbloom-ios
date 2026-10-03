@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="zh-CN">
 <head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>xBloom 咖啡豆仓</title>
 <style>
 :root{--bg:#f5f1ea;--panel:#fffdf9;--text:#28221e;--muted:#776e66;--line:#e6ddd2;--accent:#885b3d;--soft:#f1e6da;--ok:#476b53;--bad:#a34a3a;--warn:#9b6d35}
@@ -193,304 +193,6 @@ body{padding-bottom:92px}
 .v239-version-card>summary{cursor:pointer;line-height:1.65}
 .v239-version-card>.muted{margin-top:7px;font-size:12px}
 .simple-flow-note{font-size:12px;margin-bottom:9px}
-
-/* XB_IOS_P1_V012 — appearance-only overrides for Capacitor iPhone. */
-@media(max-width:720px){
- body.ios-app #settingsView .tabs{width:100%;max-width:100%;margin:10px 0 12px!important;padding:3px 4px 8px!important;overflow-x:auto!important;overflow-y:hidden;scroll-snap-type:x proximity;overscroll-behavior-inline:contain;-webkit-overflow-scrolling:touch;scrollbar-width:none;justify-content:flex-start!important;}
- body.ios-app #settingsView .tabs::-webkit-scrollbar{display:none}
- body.ios-app #settingsView .tabs .tab{scroll-snap-align:start;min-height:40px;max-width:none;flex:0 0 auto!important;white-space:nowrap;padding:8px 12px;overflow:visible!important;text-overflow:clip!important;color:#5d5047!important;background:#fffaf5!important;border:1px solid #ddd0c2!important}
- body.ios-app #settingsView .tabs .tab.active{background:var(--accent)!important;border-color:var(--accent)!important;color:#fff!important}
- body.ios-app #settingsView .card,body.ios-app #settingsView .settings-row{min-width:0;max-width:100%}
- body.ios-app #settingsStatusPane .row{display:flex;flex-wrap:wrap;align-items:flex-start;gap:6px 12px}
- body.ios-app #settingsStatusPane .row>span,body.ios-app #settingsStatusPane .row>div{min-width:0;max-width:100%;overflow-wrap:anywhere;word-break:break-word}
- body.ios-app #settingsStatusPane .row>span:last-child{flex:1 1 54%;text-align:left}
- body.ios-app .dripper-registry-list{gap:8px}
- body.ios-app .dripper-registry-item{padding:12px 13px;border-radius:14px}
- body.ios-app .dripper-registry-head{gap:8px;align-items:flex-start}
- body.ios-app .dripper-registry-head>div{min-width:0;flex:1}
- body.ios-app .dripper-registry-head b{font-size:15px;overflow-wrap:anywhere}
- body.ios-app .dripper-registry-meta{font-size:11px;line-height:1.4}
- body.ios-app .dripper-registry-item .actions{margin-top:7px!important}
- body.ios-app .dripper-registry-item .action{min-height:38px;padding:7px 12px}
- /* Bean list becomes scan-friendly without removing information or changing card click targets. */
- body.ios-app #warehouse.warehouse{grid-template-columns:minmax(0,1fr);gap:10px}
- body.ios-app #warehouse .bean-card{display:grid;grid-template-columns:112px minmax(0,1fr);align-items:stretch;min-height:144px}
- body.ios-app #warehouse .bean-img,body.ios-app #warehouse .img-placeholder{width:112px;height:100%;min-height:144px;aspect-ratio:auto;object-fit:cover;border-radius:0}
- body.ios-app #warehouse .bean-body{min-width:0;padding:11px 12px}
- body.ios-app #warehouse .bean-title{gap:5px;flex-wrap:wrap}
- body.ios-app #warehouse .bean-title b{font-size:15px;line-height:1.3;overflow-wrap:anywhere}
- body.ios-app #warehouse .tags{margin:6px 0;gap:4px}
- body.ios-app #warehouse .tag{font-size:10px;padding:3px 6px}
- body.ios-app #warehouse .intro{-webkit-line-clamp:2;font-size:11px}
- body.ios-app #warehouse .muted{font-size:11px;line-height:1.35}
- body.ios-app #detailView .heroimg{max-height:230px;object-fit:contain;background:#eee7de}
-}
-@media(max-width:350px){body.ios-app #warehouse .bean-card{grid-template-columns:96px minmax(0,1fr)}body.ios-app #warehouse .bean-img,body.ios-app #warehouse .img-placeholder{width:96px}}
-
-</style>
-
-<!-- XB_IOS_P0_BEGIN: iOS Capacitor-specific safe area & no-clipping; leave Web styling intact -->
-<script>
-(function () {
-  var cap = window.Capacitor;
-  var ios = /iPhone|iPad|iPod/.test(navigator.userAgent);
-  var native = !!(cap && (typeof cap.isNativePlatform === 'function' ? cap.isNativePlatform() : true));
-  if (ios && (native || location.protocol === 'capacitor:')) {
-    document.documentElement.classList.add('xb-ios-p0');
-  }
-})();
-</script>
-<style>
-/* Capacitor/iOS only: never change browser Web UI. */
-html.xb-ios-p0 { width:100%; max-width:100%; overflow-x:clip; }
-html.xb-ios-p0 body {
-  width:100%; max-width:100%; min-width:0; overflow-x:clip;
-  /* Existing WKWebView overlays iOS status bar: explicitly reserve top inset.
-     min fallback is needed on WebViews reporting env(safe-area-inset-top)=0. */
-  padding-top:max(54px, env(safe-area-inset-top, 0px));
-  padding-bottom:0;
-}
-html.xb-ios-p0 .wrap {
-  box-sizing:border-box; width:100%; min-width:0; max-width:100%;
-  padding-left:max(12px, env(safe-area-inset-left, 0px));
-  padding-right:max(12px, env(safe-area-inset-right, 0px));
-  /* Reserve space for fixed nav including home indicator. */
-  padding-bottom:calc(88px + env(safe-area-inset-bottom, 0px));
-}
-html.xb-ios-p0 .bottom-nav {
-  box-sizing:border-box; width:100%; max-width:100%;
-  padding-left:max(12px, env(safe-area-inset-left, 0px));
-  padding-right:max(12px, env(safe-area-inset-right, 0px));
-  padding-bottom:calc(10px + env(safe-area-inset-bottom, 0px));
-}
-html.xb-ios-p0 .bottom-nav button {min-width:0; padding-left:5px; padding-right:5px;}
-/* Replace 4 * min-width:118px with four responsive steps. No DOM removal. */
-html.xb-ios-p0 .intake-steps {
-  display:grid; grid-template-columns:repeat(4,minmax(0,1fr));
-  overflow-x:visible; width:100%; min-width:0; max-width:100%; gap:5px;
-}
-html.xb-ios-p0 .intake-step {
-  min-width:0!important; width:100%; max-width:100%;
-  white-space:normal; overflow-wrap:anywhere; word-break:normal;
-  padding:8px 2px; font-size:clamp(9px,2.5vw,11px); line-height:1.25;
-  touch-action:manipulation;
-}
-html.xb-ios-p0 .card,
-html.xb-ios-p0 .detail,
-html.xb-ios-p0 .detail-pane,
-html.xb-ios-p0 .form-grid,
-html.xb-ios-p0 .sync-slot-grid,
-html.xb-ios-p0 .capture-panel {min-width:0; max-width:100%;}
-html.xb-ios-p0 img {max-width:100%;}
-/* Keep existing intentional horizontal scroll: tabs and pour cards. */
-html.xb-ios-p0 .settings-tabs,
-html.xb-ios-p0 .pour-card-grid {max-width:100%;}
-@media (max-width:375px){html.xb-ios-p0 .intake-step{font-size:9px;padding:7px 1px;}}
-</style>
-<!-- XB_IOS_P0_END -->
-<style id="XB_IOS_P0B_V013">
-/* iOS native-only scroll-under-status shield; no scroll container substitution. */
-html.xb-ios-p0 { --xb-safe-top:max(54px, env(safe-area-inset-top, 0px)); }
-html.xb-ios-p0::before {
-  content:""; position:fixed; left:0;right:0;top:0;
-  height:var(--xb-safe-top);background:var(--bg);
-  z-index:48; pointer-events:none;
-}
-/* The native settings shortcut is ONLY shown after a working server button is located. */
-html.xb-ios-p0 #xbIosServerSettingsShortcut {
-  display:none; width:100%; margin:10px 0 14px; box-sizing:border-box;
-  background:#f7f2eb; color:#725039; text-align:left;
-  border:1px solid #ded2c4; padding:12px 14px; border-radius:12px;
-  font:inherit; font-weight:700; min-height:44px;
-}
-html.xb-ios-p0.xb-server-bridge-ready #xbIosServerSettingsShortcut { display:block; }
-/* Only hide floating controls after verified button bridge; never hide unknown server controls. */
-html.xb-ios-p0.xb-server-bridge-ready .xb-p0b-server-float {display:none!important;}
-</style>
-<style id="XB_IOS_P1C_V014">
-/* Only Capacitor app with activated P0 + P1 gates. Preserve all button IDs and handlers. */
-@media (max-width:720px) {
-  html.xb-ios-p0 body.ios-app .top {margin:0 0 13px;gap:4px;}
-  html.xb-ios-p0 body.ios-app .top h1 {font-size:clamp(23px,6vw,30px);line-height:1.2;letter-spacing:-.025em;overflow-wrap:anywhere;}
-  html.xb-ios-p0 body.ios-app .settings-back,
-  html.xb-ios-p0 body.ios-app .back button {font-size:13px;min-height:39px;padding:8px 11px;}
-  /* Icon above unchanged semantic text; existing active class is authoritative. */
-  html.xb-ios-p0 body.ios-app .bottom-nav {
-    gap:4px;padding:7px max(10px,env(safe-area-inset-right,0px))
-      calc(7px + env(safe-area-inset-bottom,0px)) max(10px,env(safe-area-inset-left,0px));
-    align-items:stretch;
-  }
-  html.xb-ios-p0 body.ios-app .bottom-nav button {
-    display:flex;flex-direction:column;gap:2px;align-items:center;justify-content:center;
-    border-radius:13px;padding:7px 4px;min-width:0;min-height:55px;
-    font-size:12px;line-height:1.2;color:var(--muted);font-weight:650;
-    -webkit-tap-highlight-color:transparent;
-  }
-  html.xb-ios-p0 body.ios-app .bottom-nav button::before {
-    display:block;height:23px;line-height:23px;font-size:20px;font-weight:500;
-  }
-  html.xb-ios-p0 body.ios-app #navAddBtn::before{content:"＋"}
-  html.xb-ios-p0 body.ios-app #navWarehouseBtn::before{content:"☕";font-size:19px}
-  html.xb-ios-p0 body.ios-app #navSyncBtn::before{content:"☁"}
-  html.xb-ios-p0 body.ios-app #navSettingsBtn::before{content:"⚙"}
-  html.xb-ios-p0 body.ios-app .bottom-nav button.active{
-    color:var(--accent);border-color:#dac4b3;background:#efe2d6;
-  }
-  /* Status: term is compact, long data is allowed to wrap and be selected. */
-  html.xb-ios-p0 body.ios-app #settingsStatusPane .validation {padding:11px;border-radius:14px;}
-  html.xb-ios-p0 body.ios-app #settingsStatusPane .row {
-    display:grid;grid-template-columns:minmax(78px,34%) minmax(0,1fr);
-    column-gap:10px;align-items:start;line-height:1.5;padding:9px 0;
-  }
-  html.xb-ios-p0 body.ios-app #settingsStatusPane .row > :first-child {
-    color:var(--muted);font-size:12px;min-width:0;
-  }
-  html.xb-ios-p0 body.ios-app #settingsStatusPane .row > :last-child {
-    font-size:12px;min-width:0;max-width:100%;overflow-wrap:anywhere;
-    word-break:break-word;flex:none;text-align:left;
-  }
-  html.xb-ios-p0 body.ios-app #settingsStatusPane .validation>b{
-    display:block;font-size:15px;padding-bottom:5px;
-  }
-}
-@media(max-width:350px){
-  html.xb-ios-p0 body.ios-app .bottom-nav button{font-size:11px}
-}
-@media(prefers-reduced-motion:reduce){
-  html.xb-ios-p0 body.ios-app .bottom-nav *{transition:none!important}
-}
-</style>
-<style id="XB_IOS_P1D_V015">
-/* v0.1.5 P1D: native-only visual hierarchy; all existing elements/handlers intact. */
-@media(max-width:720px){
-  html.xb-ios-p0 body.ios-app #detailExtractionPane,
-  html.xb-ios-p0 body.ios-app #detailAdjustPane{min-width:0;max-width:100%;}
-  html.xb-ios-p0 body.ios-app #detailExtractionPane main,
-  html.xb-ios-p0 body.ios-app #detailAdjustPane main{min-width:0;max-width:100%;}
-  html.xb-ios-p0 body.ios-app #detailExtractionPane main > .card,
-  html.xb-ios-p0 body.ios-app #detailAdjustPane main > .card{
-    padding:14px 13px;border-radius:15px;min-width:0;
-  }
-  html.xb-ios-p0 body.ios-app #detailExtractionPane h3,
-  html.xb-ios-p0 body.ios-app #detailAdjustPane h3{
-    font-size:16px;line-height:1.35;margin:0 0 4px;
-  }
-  html.xb-ios-p0 body.ios-app #detailExtractionPane .detail-section-head,
-  html.xb-ios-p0 body.ios-app #detailAdjustPane .detail-section-head{
-    gap:8px;align-items:flex-start;
-  }
-  html.xb-ios-p0 body.ios-app #extractionSourceHint,
-  html.xb-ios-p0 body.ios-app #detailAdjustPane .detail-section-head .muted{
-    font-size:12px;line-height:1.4;overflow-wrap:anywhere;
-  }
-  /* Current version, dripper and Ready stay visible: no data is hidden. */
-  html.xb-ios-p0 body.ios-app #readyBadge{flex-shrink:0;max-width:100%;}
-  html.xb-ios-p0 body.ios-app #detailExtractionPane .session-dripper{
-    display:grid;grid-template-columns:minmax(0,1fr);gap:7px;margin-top:11px;
-  }
-  html.xb-ios-p0 body.ios-app #detailExtractionPane .session-dripper b{font-size:12px;}
-  html.xb-ios-p0 body.ios-app #extractionDripperSelect{
-    min-width:0;width:100%;max-width:100%;min-height:42px;
-  }
-  html.xb-ios-p0 body.ios-app #adaptDripperBtn{width:100%;min-height:42px;}
-  /* Compact core parameters without reducing label legibility. */
-  html.xb-ios-p0 body.ios-app #extractMetricCards{
-    grid-template-columns:repeat(3,minmax(0,1fr));gap:0;
-    padding:6px 3px;margin-top:11px;border-radius:13px;
-  }
-  html.xb-ios-p0 body.ios-app #extractMetricCards .extract-metric-card{
-    padding:10px 3px;min-width:0;
-  }
-  html.xb-ios-p0 body.ios-app #extractMetricCards .extract-metric-card:nth-child(3n){border-right:0;}
-  html.xb-ios-p0 body.ios-app #extractMetricCards .extract-metric-card span{
-    font-size:11px;line-height:1.35;overflow-wrap:anywhere;
-  }
-  html.xb-ios-p0 body.ios-app #extractMetricCards .extract-metric-card b{
-    font-size:clamp(15px,4.8vw,21px);line-height:1.25;
-    display:block;overflow-wrap:anywhere;
-  }
-  /* Pour cards remain horizontal and scrollable within the pour region. */
-  html.xb-ios-p0 body.ios-app #pourCards{
-    max-width:100%;min-width:0;overscroll-behavior-x:contain;
-    -webkit-overflow-scrolling:touch;scroll-snap-type:x proximity;
-  }
-  html.xb-ios-p0 body.ios-app #detailExtractionPane .recipe-tool-details>summary{
-    min-height:44px;padding:12px 14px;
-  }
-  /* Adjustment: action first; historical details retain original folded semantics. */
-  html.xb-ios-p0 body.ios-app #detailAdjustPane .adjust-context{
-    margin-top:9px;gap:6px;
-  }
-  html.xb-ios-p0 body.ios-app #detailAdjustPane .adjust-context .status{
-    font-size:12px;max-width:100%;overflow-wrap:anywhere;
-  }
-  html.xb-ios-p0 body.ios-app #latestTastingBox,
-  html.xb-ios-p0 body.ios-app #adjustAdviceBox{
-    border-radius:12px;padding:11px 12px;line-height:1.55;
-    overflow-wrap:anywhere;
-  }
-  html.xb-ios-p0 body.ios-app #detailAdjustPane #recordTastingTopBtn{
-    width:100%;min-height:44px;
-  }
-  html.xb-ios-p0 body.ios-app #detailAdjustPane .box.next{
-    min-width:0;max-width:100%;overflow-wrap:anywhere;
-  }
-  html.xb-ios-p0 body.ios-app #reason{font-size:12px;line-height:1.5;overflow-wrap:anywhere;}
-  html.xb-ios-p0 body.ios-app #detailAdjustPane .compact-details>summary{
-    min-height:44px;padding:11px 2px;display:block;line-height:1.5;
-  }
-  html.xb-ios-p0 body.ios-app #detailAdjustPane .history-pick-card{
-    min-width:0;max-width:100%;overflow-wrap:anywhere;
-  }
-}
-@media(max-width:350px){
-  html.xb-ios-p0 body.ios-app #extractMetricCards .extract-metric-card b{font-size:15px;}
-  html.xb-ios-p0 body.ios-app #extractMetricCards .extract-metric-card span{font-size:10px;}
-}
-</style>
-<style id="XB_IOS_P2A_V016">
-html.xb-ios-p0 body.ios-app #xbP2AToast {
-  position:fixed;left:16px;right:16px;
-  bottom:calc(102px + env(safe-area-inset-bottom,0px));
-  z-index:120;padding:12px 15px;border-radius:13px;
-  background:#4b342b;color:white;font-size:13px;line-height:1.45;
-  opacity:0;transform:translateY(12px);pointer-events:none;
-  transition:opacity .2s,transform .2s;box-shadow:0 5px 20px #0002;
-}
-html.xb-ios-p0 body.ios-app #xbP2AToast.visible {opacity:1;transform:translateY(0)}
-html.xb-ios-p0 body.ios-app #xbP2AToast[data-kind="error"] {background:#8d3830}
-html.xb-ios-p0 body.ios-app #xbP2ANetwork[hidden] {display:none!important}
-html.xb-ios-p0 body.ios-app #xbP2ANetwork {
-  position:fixed;top:calc(max(54px,env(safe-area-inset-top,0px)) + 4px);
-  left:10px;right:10px;z-index:100;display:flex;align-items:center;gap:9px;
-  padding:10px 12px;border-radius:13px;background:#fff4e9;color:#663b27;
-  border:1px solid #e2ba92;box-shadow:0 6px 20px #0002;
-  font-size:12px;line-height:1.4;
-}
-html.xb-ios-p0 body.ios-app #xbP2ANetworkText {flex:1;min-width:0}
-html.xb-ios-p0 body.ios-app #xbP2ARetry {
-  flex:0 0 auto;padding:8px 10px;border:1px solid #b48a68;
-  border-radius:9px;background:white;color:#663b27;font-size:12px;
-}
-html.xb-ios-p0 body.ios-app button.xb-p2a-busy {
-  opacity:.62!important;cursor:wait;pointer-events:none;
-}
-@media(prefers-reduced-motion:reduce){
-  html.xb-ios-p0 body.ios-app #xbP2AToast{transition:none}
-}
-</style>
-
-<style id="XB_IOS_P2B_V017">
-/* Activated only by ios-app marker, inherited from v0.1.2 fix. */
-html.xb-ios-p0 body.ios-app img.bean-img,
-html.xb-ios-p0 body.ios-app img.heroimg{cursor:zoom-in;touch-action:manipulation}
-html.xb-ios-p0 body.ios-app #xbP2BViewer[hidden]{display:none!important}
-html.xb-ios-p0 body.ios-app #xbP2BViewer{position:fixed;inset:0;z-index:10050;background:rgba(19,17,16,.96);display:flex;flex-direction:column;align-items:center;justify-content:center;overscroll-behavior:contain;color:#fff}
-html.xb-ios-p0 body.ios-app #xbP2BViewer .xb-p2b-close{position:absolute;right:16px;top:max(58px,env(safe-area-inset-top));z-index:2;width:46px;height:46px;border:1px solid #8c817b;border-radius:24px;background:#302925;color:#fff;font-size:26px;display:grid;place-items:center}
-html.xb-ios-p0 body.ios-app #xbP2BViewer .xb-p2b-stage{width:100%;height:100%;touch-action:none;display:flex;align-items:center;justify-content:center;overflow:hidden}
-html.xb-ios-p0 body.ios-app #xbP2BViewer img{display:block;max-width:96vw;max-height:80dvh;object-fit:contain;transform-origin:center center;will-change:transform;user-select:none;-webkit-user-drag:none;touch-action:none}
-html.xb-ios-p0 body.ios-app #xbP2BViewer .xb-p2b-hint{position:absolute;bottom:max(30px,env(safe-area-inset-bottom));text-align:center;font-size:12px;color:#d7ccc2;pointer-events:none}
-@media(prefers-reduced-motion:reduce){html.xb-ios-p0 body.ios-app #xbP2BViewer *{transition:none!important}}
 </style>
 </head>
 <body>
@@ -954,18 +656,6 @@ html.xb-ios-p0 body.ios-app #xbP2BViewer .xb-p2b-hint{position:absolute;bottom:m
 <div class="bottom-nav"><button id="navAddBtn">新增</button><button id="navWarehouseBtn" class="active">豆仓</button><button id="navSyncBtn">同步</button><button id="navSettingsBtn">设置</button></div>
 <script>
 const $=s=>document.querySelector(s);
-
-/* XB_IOS_V018_REBASE - Capacitor API endpoint adapter. */
-const XB_SERVER_KEY='xbloom_ios_server_url';
-function xbReadServer(){let s=localStorage.getItem(XB_SERVER_KEY)||'http://192.168.50.22:8088';return s.replace(/\/+$/,'');}
-function absURL(path){if(typeof path!=='string')return path;if(/^(?:https?:|blob:|data:)/i.test(path))return path;return xbReadServer()+(path.startsWith('/')?path:'/'+path);}
-function xbStoreServer(v){const u=new URL(v.trim());if(!['http:','https:'].includes(u.protocol)||!u.hostname||u.username||u.password||u.search||u.hash)throw Error('请输入有效的 HTTP(S) 服务器地址');localStorage.setItem(XB_SERVER_KEY,u.origin);return u.origin;}
-(function(){function makeEditor(){if(!window.Capacitor||document.getElementById('xbIosServerButton'))return;
- let b=document.createElement('button');b.type='button';b.id='xbIosServerButton';b.textContent='🛜 服务器';b.style.cssText='position:fixed;right:12px;bottom:110px;z-index:60;border-radius:12px;padding:10px;background:#fffdf9;color:#634936;border:1px solid #ddd0c2';
- b.addEventListener('click',function(){const v=prompt('服务器地址',xbReadServer());if(v===null)return;try{xbStoreServer(v);alert('地址已保存。请重新启动 App。')}catch(e){alert(e.message)}});
- document.body.classList.add('ios-app');document.body.appendChild(b);}
- if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',makeEditor,{once:true});else makeEditor();})();
-
 let beans=[],selected=null,selectedBean=null,selectedRecipeContext={},currentRecipe=null,currentVersion=null,currentReadiness=null,activeRule=null,nextRecipe=null,currentFilter="drinking";
 // Dripper precedence contract: session dripper > recipe version dripper > bean default dripper > omni2
 
@@ -981,7 +671,6 @@ const rules=[
 ];
 
 async function api(url,opt){
- url=absURL(url);
  const r=await fetch(url,opt);
  if(!r.ok){
    let msg=await r.text();
@@ -1005,7 +694,7 @@ function stateBadge(r){
 function renderWarehouse(list){
  $("#stats").textContent=`共 ${list.length} 款豆`;
  $("#warehouse").innerHTML=list.map(b=>`<article class="bean-card" data-id="${esc(b.bean_id)}">
- ${b.image_url?`<img class="bean-img" src="${esc(absURL(b.image_url))}" alt="${esc(b.name)}包装">`:`<div class="img-placeholder">暂无图片</div>`}
+ ${b.image_url?`<img class="bean-img" src="${esc(b.image_url)}" alt="${esc(b.name)}包装">`:`<div class="img-placeholder">暂无图片</div>`}
  <div class="bean-body"><div class="bean-title"><b>${esc(b.sample_no)} · ${esc(b.name)}</b><span class="muted">${esc(labelRoast(b.roast_level))}</span></div>
  <div class="muted">${esc(b.roaster||"")}</div><div class="tags">${(b.flavor_notes||[]).map(x=>`<span class="tag">${esc(x)}</span>`).join("")}</div>
  <div class="intro">${esc(b.introduction||b.flavor_description||"暂无介绍")}</div>
@@ -1397,7 +1086,7 @@ async function openBean(id){
  $("#flavors").innerHTML=(d.bean.flavor_notes||[]).map(x=>`<span class="tag">${esc(x)}</span>`).join("");
  $("#intro").textContent=d.bean.introduction||"暂无介绍";$("#flavorDesc").textContent=d.bean.flavor_description||"暂无风味描述";$("#brewGuide").textContent=d.bean.brew_guidance||"暂无冲煮方向";
  $("#beanRoast").textContent=labelRoast(d.bean.roast_level)||"—";$("#beanDripper").textContent=zhDripper(d.bean.dripper||"omni2");$("#beanType").textContent=zhBeanType(d.bean.bean_type);$("#beanOrigin").textContent=d.bean.origin||"—";$("#beanVariety").textContent=d.bean.variety||"—";$("#beanProcess").textContent=d.bean.process||"—";$("#beanRoaster").textContent=d.bean.roaster||"—";
- $("#imageArea").innerHTML=d.bean.image_url?`<img class="heroimg" src="${esc(absURL(d.bean.image_url))}" alt="${esc(d.bean.name)}包装">`:`<div class="img-placeholder">暂无图片</div>`;
+ $("#imageArea").innerHTML=d.bean.image_url?`<img class="heroimg" src="${esc(d.bean.image_url)}" alt="${esc(d.bean.name)}包装">`:`<div class="img-placeholder">暂无图片</div>`;
  $("#readyBadge").innerHTML=stateBadge(currentReadiness);
  renderCloudWorkflow(d.summary?.cloud);
  const latestCandidate=d.latest_candidate||null;
@@ -1641,24 +1330,24 @@ $("#confirmPromoteBtn").onclick=async()=>{
 
 $("#downloadYamlBtn").onclick=()=>{
  if(!selected||!currentVersion)return;
- location.href=absURL(`/api/beans/${encodeURIComponent(selected.bean_id)}/recipes/${encodeURIComponent(currentVersion)}/download`);
+ location.href=`/api/beans/${encodeURIComponent(selected.bean_id)}/recipes/${encodeURIComponent(currentVersion)}/download`;
 };
 
 $("#bundleBtn").onclick=()=>{
  if(!selected)return;
- location.href=absURL(`/api/beans/${encodeURIComponent(selected.bean_id)}/bundle`);
+ location.href=`/api/beans/${encodeURIComponent(selected.bean_id)}/bundle`;
 };
 
 $("#qrBtn").onclick=()=>{
  if(!selected||!currentVersion)return;
- const u=`/api/beans/${encodeURIComponent(selected.bean_id)}/recipes/${encodeURIComponent(currentVersion)}/qr?base_url=${encodeURIComponent(xbReadServer())}`;
- $("#qrImg").src=absURL(u);
+ const u=`/api/beans/${encodeURIComponent(selected.bean_id)}/recipes/${encodeURIComponent(currentVersion)}/qr?base_url=${encodeURIComponent(location.origin)}`;
+ $("#qrImg").src=u;
  $("#qrArea").classList.toggle("hidden");
 };
 
 $("#rawUrlBtn").onclick=()=>{
  if(!selected||!currentVersion)return;
- const url=xbReadServer()+`/raw/recipes/${encodeURIComponent(selected.bean_id)}/${encodeURIComponent(currentVersion)}.yaml`;
+ const url=location.origin+`/raw/recipes/${encodeURIComponent(selected.bean_id)}/${encodeURIComponent(currentVersion)}.yaml`;
  $("#rawUrlText").textContent=url;
  $("#rawArea").classList.toggle("hidden");
 };
@@ -2239,237 +1928,5 @@ $('#extractionProfileDetails').addEventListener('toggle',e=>{if(e.target.open)xb
 </script>
 
 
-
-<script id="XB_IOS_P1_V012">
-(function(){
-  if(!(window.Capacitor && document.body)) return;
-  function alignSelected(){
-    var bar=document.querySelector('#settingsView .tabs');
-    if(!bar || !bar.clientWidth) return;
-    var tab=bar.querySelector('.tab.active');
-    if(!tab) return;
-    var target=tab.offsetLeft-bar.offsetLeft-(bar.clientWidth-tab.offsetWidth)/2;
-    bar.scrollLeft=Math.max(0,target);
-  }
-  document.querySelectorAll('#settingsView .tabs .tab').forEach(function(tab){
-    tab.addEventListener('click',function(){requestAnimationFrame(alignSelected);});
-  });
-  var nav=document.getElementById('navSettingsBtn');
-  if(nav) nav.addEventListener('click',function(){requestAnimationFrame(alignSelected);});
-  // Show first tab when settings is initially displayed; no mutation observers, polling, or API changes.
-})();
-</script>
-<script id="XB_IOS_P0B_V013_SCRIPT">
-(function(){
-  if(!document.documentElement.classList.contains('xb-ios-p0')) return;
-  function setup(){
-    var view=document.getElementById('settingsView');
-    if(!view) return;
-    var shortcut=document.getElementById('xbIosServerSettingsShortcut');
-    if(!shortcut){
-      shortcut=document.createElement('button');shortcut.type='button';
-      shortcut.id='xbIosServerSettingsShortcut';
-      shortcut.textContent='📶 服务器连接设置';
-      shortcut.setAttribute('aria-label','打开服务器连接设置');
-      var anchor=view.querySelector('.card')||view;
-      anchor.insertBefore(shortcut,anchor.firstChild);
-    }
-    function identify(){
-      // Match a *button* only, exact visible label; never guess a server URL field.
-      var matches=Array.from(document.querySelectorAll('button'))
-        .filter(function(b){return b!==shortcut && /^(?:📶|🛜|🌐|📡)?\s*服务器\s*$/.test((b.textContent||'').trim());});
-      if(matches.length!==1) return false; // Ambiguity = preserve original UI.
-      var original=matches[0];
-      // Require fixed-position floating placement (class or computed style).
-      var positioned=getComputedStyle(original).position==='fixed';
-      if(!positioned){
-        var parent=original.parentElement;
-        if(parent) positioned=getComputedStyle(parent).position==='fixed';
-      }
-      if(!positioned) return false;
-      var floatNode=getComputedStyle(original).position==='fixed'?original:original.parentElement;
-      if(!floatNode || view.contains(floatNode) || floatNode.classList.contains('bottom-nav'))return false;
-      shortcut.onclick=function(){original.click();};
-      floatNode.classList.add('xb-p0b-server-float');
-      document.documentElement.classList.add('xb-server-bridge-ready');
-      return true;
-    }
-    if(identify())return;
-    // Short-lived passive observation for asynchronously injected original shortcut.
-    var n=0, mo=new MutationObserver(function(){
-      if(identify() || ++n>80)mo.disconnect();
-    });
-    mo.observe(document.body,{childList:true,subtree:true});
-    setTimeout(function(){mo.disconnect();},10000);
-  }
-  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',setup,{once:true});
-  else setup();
-})();
-</script>
-<script>
-/* XB_IOS_P2A_V016 runtime: iOS-only request feedback, duplicate-write guard, network recovery. */
-(function () {
-  'use strict';
-  function initP2A() {
-    if (!document.documentElement.classList.contains('xb-ios-p0') ||
-        !document.body.classList.contains('ios-app') ||
-        !window.Capacitor || typeof api !== 'function') return;
-    if (window.__xbP2AInstalled) return;
-    window.__xbP2AInstalled = true;
-    var previousApi = api;
-    var active = new Set();
-    var lastTap = null;
-    var toastTimer = null;
-    var toast = document.createElement('div');
-    toast.id = 'xbP2AToast';
-    toast.setAttribute('role', 'status');
-    toast.setAttribute('aria-live', 'polite');
-    toast.setAttribute('aria-atomic', 'true');
-    document.body.appendChild(toast);
-    var banner = document.createElement('div');
-    banner.id = 'xbP2ANetwork';
-    banner.setAttribute('role', 'alert');
-    banner.hidden = true;
-    banner.innerHTML = '<span id="xbP2ANetworkText">无法连接服务器</span><button type="button" id="xbP2ARetry">检查连接</button>';
-    document.body.appendChild(banner);
-    function tell(message, kind) {
-      toast.textContent = String(message).slice(0, 180);
-      toast.dataset.kind = kind || 'info';
-      toast.classList.add('visible');
-      clearTimeout(toastTimer);
-      toastTimer = setTimeout(function () { toast.classList.remove('visible'); }, 3200);
-    }
-    function networkError(e) {
-      var msg = String(e && (e.message || e) || '');
-      return e instanceof TypeError || (e && e.name === 'AbortError') ||
-        /failed to fetch|network request failed|networkerror|load failed|internet connection|offline|timed out|timeout|connection refused|could not connect/i.test(msg);
-    }
-    function showNetwork(isWrite) {
-      document.getElementById('xbP2ANetworkText').textContent = isWrite ?
-        '连接异常：刚才的写入结果可能未知，请先核对数据，勿重复提交。' :
-        '服务器连接异常，请检查 Wi-Fi 或服务器地址。';
-      banner.hidden = false;
-      if (isWrite) banner.dataset.uncertain = '1';
-      tell(isWrite ? '请求结果未知，请检查记录后再操作' : '连接异常，可检查连接', 'error');
-    }
-    function markTap(button) {
-      if (!button || button.disabled) return;
-      lastTap = { button: button, at: Date.now() };
-    }
-    document.addEventListener('click', function (event) {
-      var btn = event.target && event.target.closest && event.target.closest('button,input[type="submit"]');
-      if (btn && btn.id !== 'xbP2ARetry') markTap(btn);
-    }, true);
-    function recognizedFeedback(url, result) {
-      // Only report completed effects when response structure explicitly confirms them.
-      var path = String(url).split('?')[0];
-      if (path === '/api/beans' && result && result.bean && result.bean.bean_id) return '咖啡豆已创建';
-      if (/\/adapt-dripper$/.test(path) && result && result.created === true) return '已生成滤杯适配候选';
-      return '请求已返回，请核对页面结果';
-    }
-    api = async function xbP2AApi(url, opt) {
-      var method = String(opt && opt.method || 'GET').toUpperCase();
-      var write = !['GET', 'HEAD', 'OPTIONS'].includes(method);
-      var key = method + ' ' + String(url);
-      if (write && active.has(key)) {
-        tell('正在提交，请勿重复点击', 'info');
-        throw new Error('同一操作仍在提交中，已阻止重复请求');
-      }
-      var btn = null;
-      var prevDisabled = false;
-      if (write) {
-        active.add(key);
-        if (lastTap && Date.now() - lastTap.at < 1000) {
-          btn = lastTap.button;
-          lastTap = null;
-          if (btn && btn.isConnected && !btn.disabled) {
-            prevDisabled = btn.disabled;
-            btn.disabled = true;
-            btn.setAttribute('aria-busy', 'true');
-            btn.classList.add('xb-p2a-busy');
-          } else btn = null;
-        }
-      }
-      try {
-        var data = await previousApi(url, opt);
-        if (banner.dataset.uncertain !== '1') banner.hidden = true;
-        if (write) tell(recognizedFeedback(url, data), 'success');
-        return data;
-      } catch (e) {
-        if (networkError(e)) showNetwork(write);
-        else if (write) tell('请求未成功：' + String(e && e.message || e).slice(0, 80), 'error');
-        throw e;
-      } finally {
-        if (write) active.delete(key);
-        if (btn) {
-          btn.disabled = prevDisabled;
-          btn.removeAttribute('aria-busy');
-          btn.classList.remove('xb-p2a-busy');
-        }
-      }
-    };
-    document.getElementById('xbP2ARetry').addEventListener('click', async function () {
-      var retry = this;
-      retry.disabled = true;
-      try {
-        // Explicitly read-only health probe: NEVER replay a POST/PATCH automatically.
-        await previousApi('/api/health', { method: 'GET' });
-        banner.hidden = true;
-        delete banner.dataset.uncertain;
-        tell('服务器连接已恢复，请先检查先前操作结果', 'success');
-      } catch (e) {
-        showNetwork(false);
-      } finally {
-        retry.disabled = false;
-      }
-    });
-  }
-  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', initP2A, { once: true });
-  else initP2A();
-})();
-
-</script>
-
-<script id="XB_IOS_P2B_RUNTIME_V017">
-(function(){
-  'use strict';
-  function init(){
-    if(!window.Capacitor || !document.documentElement.classList.contains('xb-ios-p0') || !document.body.classList.contains('ios-app')) return;
-    if(document.getElementById('xbP2BViewer')) return;
-    var viewer=document.createElement('div');
-    viewer.id='xbP2BViewer';viewer.hidden=true;
-    viewer.setAttribute('role','dialog');viewer.setAttribute('aria-modal','true');viewer.setAttribute('aria-label','包装图片预览');
-    viewer.innerHTML='<button class="xb-p2b-close" type="button" aria-label="关闭图片预览">×</button><div class="xb-p2b-stage"><img alt="包装图片放大预览" draggable="false"></div><div class="xb-p2b-hint">双指缩放 · 双击复位</div>';
-    document.body.appendChild(viewer);
-    var stage=viewer.querySelector('.xb-p2b-stage'),photo=stage.querySelector('img'),close=viewer.querySelector('button');
-    var previousFocus=null,priorOverflow='',scale=1,dx=0,dy=0,touches=new Map(),startDist=0,startScale=1,startDx=0,startDy=0,startPoint=null,lastTap=0;
-    function paint(){photo.style.transform='translate('+dx+'px,'+dy+'px) scale('+scale+')'}
-    function reset(){scale=1;dx=0;dy=0;paint()}
-    function hide(){if(viewer.hidden)return;viewer.hidden=true;photo.removeAttribute('src');document.body.style.overflow=priorOverflow;touches.clear();reset();if(previousFocus&&previousFocus.isConnected)previousFocus.focus({preventScroll:true})}
-    function show(src,alt){if(!src)return;previousFocus=document.activeElement;priorOverflow=document.body.style.overflow;document.body.style.overflow='hidden';photo.src=src;photo.alt=(alt||'咖啡包装')+'放大预览';viewer.hidden=false;reset();close.focus({preventScroll:true})}
-    document.addEventListener('click',function(e){var img=e.target.closest&&e.target.closest('img.bean-img,img.heroimg');if(!img || !img.closest('#warehouse,#detailView') || !img.currentSrc && !img.src)return;e.preventDefault();e.stopPropagation();show(img.currentSrc||img.src,img.alt)},true);
-    close.addEventListener('click',hide);
-    viewer.addEventListener('click',function(e){if(e.target===viewer || e.target===stage)hide()});
-    document.addEventListener('keydown',function(e){if(!viewer.hidden&&e.key==='Escape'){e.preventDefault();hide()}});
-    function dist(){var v=Array.from(touches.values());return Math.hypot(v[0].x-v[1].x,v[0].y-v[1].y)}
-    stage.addEventListener('pointerdown',function(e){if(viewer.hidden)return;stage.setPointerCapture(e.pointerId);touches.set(e.pointerId,{x:e.clientX,y:e.clientY});if(touches.size===2){startDist=dist();startScale=scale;startPoint=null}else if(touches.size===1){startPoint={x:e.clientX,y:e.clientY};startDx=dx;startDy=dy}});
-    stage.addEventListener('pointermove',function(e){if(!touches.has(e.pointerId))return;touches.set(e.pointerId,{x:e.clientX,y:e.clientY});if(touches.size===2 && startDist>0){scale=Math.max(1,Math.min(5,startScale*dist()/startDist));if(scale===1){dx=dy=0}paint()}else if(touches.size===1&&scale>1&&startPoint){dx=startDx+e.clientX-startPoint.x;dy=startDy+e.clientY-startPoint.y;paint()}});
-    function end(e){touches.delete(e.pointerId);startPoint=null;if(touches.size<2)startDist=0}
-    stage.addEventListener('pointerup',end);stage.addEventListener('pointercancel',end);
-    stage.addEventListener('dblclick',function(e){e.preventDefault();reset()});
-    // Keyboard avoidance: use visual viewport, keep existing scroll root and inputs unchanged.
-    var viewport=window.visualViewport,keyboardPending=0;
-    function activeEditor(){var el=document.activeElement;return el && el.matches && el.matches('input:not([type=checkbox]):not([type=radio]),textarea,select,[contenteditable="true"]')?el:null}
-    function adjust(){if(!viewer.hidden)return;var el=activeEditor();if(!el)return;var vv=window.visualViewport;var visibleBottom=vv?vv.offsetTop+vv.height:window.innerHeight;var obstruction=window.innerHeight-visibleBottom;if(obstruction<110)return;var r=el.getBoundingClientRect();if(r.bottom>visibleBottom-18 || r.top<Math.max(0,vv.offsetTop)+12)el.scrollIntoView({block:'center',behavior:'instant'})}
-    function schedule(){clearTimeout(keyboardPending);keyboardPending=setTimeout(adjust,140)}
-    if(viewport){viewport.addEventListener('resize',schedule);viewport.addEventListener('scroll',schedule)}
-    document.addEventListener('focusin',function(e){if(e.target&&e.target.matches&&e.target.matches('input,textarea,select,[contenteditable="true"]'))schedule()});
-    // Haptics: only on explicitly recognized P2A success text, when native plugin exists.
-    var toast=document.getElementById('xbP2AToast'),lastHapticText='';
-    if(toast && window.MutationObserver){var obs=new MutationObserver(function(){var label=toast.textContent.trim();if(!toast.classList.contains('visible')||toast.dataset.kind!=='success'||!['咖啡豆已创建','已生成滤杯适配候选'].includes(label)){lastHapticText='';return}if(label===lastHapticText)return;lastHapticText=label;var p=window.Capacitor&&window.Capacitor.Plugins&&window.Capacitor.Plugins.Haptics;if(p&&typeof p.impact==='function')Promise.resolve(p.impact({style:'LIGHT'})).catch(function(){});});obs.observe(toast,{childList:true,characterData:true,attributes:true,subtree:true,attributeFilter:['class','data-kind']})}
-  }
-  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init,{once:true});else init();
-})();
-</script>
 </body>
 </html>

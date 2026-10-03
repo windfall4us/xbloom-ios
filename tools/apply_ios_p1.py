@@ -55,7 +55,6 @@ js='''
 <script id="XB_IOS_P1_V012">
 (function(){
   if(!(window.Capacitor && document.body)) return;
-  document.body.classList.add('ios-app');
   function alignSelected(){
     var bar=document.querySelector('#settingsView .tabs');
     if(!bar || !bar.clientWidth) return;
