@@ -1770,19 +1770,15 @@ async function createBeanFromForm(generateAfter=false){
    const created=await api("/api/beans",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(obj)});
    savedBeanId=created.bean.bean_id;
    if(image&&image.size){const im=new FormData();im.append("image",image);await api(`/api/beans/${encodeURIComponent(created.bean.bean_id)}/image`,{method:"POST",body:im})}
+   $("#newBeanView").classList.add("hidden");form.reset();await loadBeans();await openBean(created.bean.bean_id);showDetailPane("extraction");
    let candidate=null;
    if(generateAfter){
      setIntakeStep(3);
-     candidate=await api(`/api/beans/${encodeURIComponent(created.bean.bean_id)}/auto-recipe-candidate`,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({style:"balanced",dripper:obj.dripper||"omni2",use_ai:true})});
+     const stepEl=$("#stepCandidate");if(stepEl)stepEl.textContent="4 首版配方生成中…";
+     try{candidate=await api(`/api/beans/${encodeURIComponent(created.bean.bean_id)}/auto-recipe-candidate`,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({style:"balanced",dripper:obj.dripper||"omni2",use_ai:true})});}
+     finally{if(stepEl)stepEl.textContent="4 首版配方"}
    }
-   $("#newBeanView").classList.add("hidden");form.reset();await loadBeans();await openBean(created.bean.bean_id);showDetailPane("extraction");
-   if(candidate){const fallback=candidate.ai_fallback_reason?`
-AI 回退原因：${candidate.ai_fallback_reason}`:"";alert(`咖啡豆已保存。
-首版候选配方 v${candidate.version} 已生成。
-引擎：${candidate.engine}
-状态：${candidate.readiness?.state||"—"}${fallback}
-
-候选配方已显示在「萃取」页，但不会自动成为当前版本。`);await showHistory()}
+   if(candidate){alert(`咖啡豆已保存，候选配方 v${candidate.version} 已生成。请到萃取页确认配方。`);await showHistory()}
    else alert("咖啡豆信息已保存。可在「萃取」页点击“生成首版萃取配方”。");
  }catch(e){if(savedBeanId){alert("咖啡豆已保存，但后续图片或候选配方生成未完成："+e.message+"。请先检查豆仓，勿重复新增。");await loadBeans();await openBean(savedBeanId);showDetailPane("extraction");}else{showIntakePanel(1);alert("新增失败："+e.message)}}
 }
