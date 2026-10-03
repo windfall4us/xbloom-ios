@@ -11,6 +11,12 @@
 	</dict>
 	<key>NSLocalNetworkUsageDescription</key>
 	<string>需要访问局域网内的 xBloom 咖啡豆仓服务器（192.168.50.22:8088）以同步豆仓数据。</string>
+	<key>NSCameraUsageDescription</key>
+	<string>用于拍摄咖啡豆包装照片，自动识别豆子资料。</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>用于从相册选择咖啡豆包装照片进行识别。</string>
+	<key>NSPhotoLibraryAddUsageDescription</key>
+	<string>用于保存咖啡豆包装照片到相册。</string>
 	<key>CFBundleDisplayName</key>
         <string>xBloom 咖啡豆仓</string>
 	<key>CFBundleExecutable</key>
