@@ -1,6 +1,6 @@
 {
   "name": "xbloom-coffee-library-ios",
-  "version": "0.1.9",
+  "version": "0.2.0",
   "description": "xBloom 咖啡豆仓 iOS 客户端（Capacitor 封装，生产 UI-v1.9 派生 web bundle）",
   "private": true,
   "scripts": {
