@@ -1,7 +1,7 @@
 {
   "name": "xbloom-coffee-library-ios",
-  "version": "0.1.0",
-  "description": "xBloom 咖啡豆仓 iOS 客户端（Capacitor 封装，后端 v2.3.7 派生 web bundle）",
+  "version": "0.1.9",
+  "description": "xBloom 咖啡豆仓 iOS 客户端（Capacitor 封装，生产 UI-v1.9 派生 web bundle）",
   "private": true,
   "scripts": {
     "sync:web": "npx cap sync ios",

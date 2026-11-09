@@ -9,3 +9,6 @@ ios/App/App/developers_*.json
 **/*.xcuserstate
 
 *.bak
+
+*.ipa
+web-backups/
