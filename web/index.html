@@ -731,7 +731,7 @@ html.xb-ios-p0 body.ios-app #xbP2BViewer .xb-p2b-hint{position:absolute;bottom:m
 @media(prefers-reduced-motion:reduce){html.xb-ios-p0 body.ios-app #xbP2BViewer *{transition:none!important}}
 </style>
 
-<style id="XB_IOS_V020_REBASE">
+<style id="XB_IOS_V021_REBASE">
 /* iOS-only alignment after the v1.9.2 type scale. Additive: every rule is gated on
    html.xb-ios-p0 body.ios-app, and no rule overrides a font-size token -- the App
    must render on the same 7-step scale as the web. */
@@ -1289,11 +1289,11 @@ html.xb-ios-p0 body.ios-app .param-cell{padding:12px 6px}
 <script>
 const $=s=>document.querySelector(s);
 
-/* XB_IOS_V020_SHIM - Capacitor API endpoint adapter + iOS-safe server editor.
+/* XB_IOS_V021_SHIM - Capacitor API endpoint adapter + iOS-safe server editor.
    Sizes use the page type tokens so the App shares the web's 7-step scale. */
 const XB_SERVER_KEY='xbloom_ios_server_url';
-function xbReadServer(){let s=localStorage.getItem(XB_SERVER_KEY)||'http://192.168.50.22:8088';return s.replace(/\/+$/,'');}
-function absURL(path){if(typeof path!=='string')return path;if(/^(?:https?:|blob:|data:)/i.test(path))return path;return xbReadServer()+(path.startsWith('/')?path:'/'+path);}
+function xbReadServer(){let s=localStorage.getItem(XB_SERVER_KEY)||'';return s.replace(/\/+$/,'');}
+function absURL(path){if(typeof path!=='string')return path;if(/^(?:https?:|blob:|data:)/i.test(path))return path;const base=xbReadServer();if(!base)return path;return base+(path.startsWith('/')?path:'/'+path);}
 function xbStoreServer(v){const u=new URL(String(v).trim());if(!['http:','https:'].includes(u.protocol)||!u.hostname||u.username||u.password)throw Error('请输入有效的 HTTP(S) 服务器地址');localStorage.setItem(XB_SERVER_KEY,u.origin);return u.origin;}
 (function(){
  /* WKWebView has no prompt(); use an inline panel. Keep the trigger a fixed button so
@@ -1324,6 +1324,16 @@ function xbStoreServer(v){const u=new URL(String(v).trim());if(!['http:','https:
  function mount(){
    if(!window.Capacitor)return;
    if(document.getElementById('xbIosServerButton'))return;
+   /* v0.2.1: 没有配置过服务器地址时，先要求填写再加载数据。
+      这样包里不需要写死任何内网地址，也不会静默失败。 */
+   if(!xbReadServer()){
+     openPanel();
+     var hint=document.createElement('div');
+     hint.id='xbIosServerHint';
+     hint.textContent='首次使用请填写 xBloom 服务器地址（形如 http://主机:8088）';
+     hint.style.cssText='margin-top:8px;font-size:var(--fs-body);color:#8a6a4f';
+     if(panel)panel.appendChild(hint);
+   }
    var b=document.createElement('button');b.type='button';b.id='xbIosServerButton';b.textContent='🛜 服务器';
    b.setAttribute('aria-label','打开服务器地址设置');
    b.style.cssText='position:fixed;right:12px;bottom:110px;z-index:60;border-radius:12px;padding:10px;background:var(--bg);color:#634936;border:1px solid #ddd0c2;font-size:var(--fs-body)';
@@ -3781,6 +3791,6 @@ $('#extractionProfileDetails').addEventListener('toggle',e=>{if(e.target.open)xb
 })();
 </script>
 
-<script>/* XB_IOS_V020_REBASE: v1.9.2 type scale + v0.2.0 iOS shims. Server editor uses an inline panel (no prompt()). */</script>
+<script>/* XB_IOS_V021_REBASE: v1.9.2 type scale + v0.2.1 iOS shims. Server editor uses an inline panel (no prompt()). */</script>
 </body>
 </html>

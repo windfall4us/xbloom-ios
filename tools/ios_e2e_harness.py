@@ -1,19 +1,44 @@
 #!/usr/bin/env python3
-"""iOS bundle E2E harness: serve ios/web statically, proxy GET-only to production,
+"""iOS bundle E2E harness: serve the bundle statically, proxy GET-only to a server,
 and inject the Capacitor mock + same-origin server URL into index.html.
 
 Why the injection: on a real device absURL() points at the configured server and
 WKWebView is not subject to CORS. In a desktop browser the shell is served from
-127.0.0.1 while the API lives on 192.168.50.22:8088, so every call would be a
-blocked cross-origin request. Pointing the shell at the proxy origin keeps the
-bundle unmodified and still exercises the real payloads.
-Non-GET is refused with 405 so the test cannot mutate production.
-"""
-import http.server, socketserver, urllib.request, urllib.error, sys
+127.0.0.1 while the API lives elsewhere, so every call would be a blocked
+cross-origin request. Pointing the shell at the proxy origin keeps the bundle
+unmodified and still exercises the real payloads.
 
-ROOT = "/home/windfall/coffee/ios/web"
-UPSTREAM = "http://192.168.50.22:8088"
-PORT = 8098
+Non-GET is refused with 405 so the test can never mutate the upstream server.
+
+Usage
+    python3 ios_e2e_harness.py [--serve DIR] [--upstream URL] [--port N]
+
+    --serve     bundle directory to serve      (default: ../  -> the folder holding index.html)
+    --upstream  API server to proxy GET to     (default: http://127.0.0.1:8088)
+    --port      listen port                    (default: 8098)
+
+No absolute paths and no baked-in server address: both come from the command line,
+so the harness works from any checkout and does not disclose an internal host.
+"""
+import argparse, http.server, socketserver, urllib.request, urllib.error, sys
+from pathlib import Path
+
+
+def _parse(argv):
+    ap = argparse.ArgumentParser(add_help=True, description=__doc__,
+                                 formatter_class=argparse.RawDescriptionHelpFormatter)
+    ap.add_argument('--serve', default=str(Path(__file__).resolve().parent.parent),
+                    help='bundle directory to serve (default: the parent of this tools/ dir)')
+    ap.add_argument('--upstream', default='http://127.0.0.1:8088',
+                    help='upstream API base for GET proxying')
+    ap.add_argument('--port', type=int, default=8098)
+    return ap.parse_args(argv)
+
+
+ARGS = _parse(sys.argv[1:])
+ROOT = str(Path(ARGS.serve).expanduser().resolve())
+UPSTREAM = ARGS.upstream.rstrip('/')
+PORT = ARGS.port
 PREFIXES = ("/api", "/media", "/raw", "/openapi.json")
 MOCK = (b"<script>window.Capacitor={isNativePlatform:function(){return true},"
         b"getPlatform:function(){return 'ios'},Plugins:{}};"
@@ -75,7 +100,9 @@ class H(http.server.SimpleHTTPRequestHandler):
 
 
 if __name__ == "__main__":
+    if not Path(ROOT, 'index.html').is_file():
+        sys.exit(f"no index.html under {ROOT}; pass --serve <dir containing index.html>")
     socketserver.TCPServer.allow_reuse_address = True
-    with socketserver.ThreadingTCPServer(("127.0.0.1", PORT), H) as s:
+    with socketserver.ThreadingTCPServer(("127.0.0.1", PORT), H) as srv:
         print(f"serving {ROOT} on :{PORT} (GET-only proxy -> {UPSTREAM})", flush=True)
-        s.serve_forever()
+        srv.serve_forever()

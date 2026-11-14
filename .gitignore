@@ -12,3 +12,5 @@ ios/App/App/developers_*.json
 web-backups/
 release-v019/
 release-v020/
+__pycache__/
+*.pyc
