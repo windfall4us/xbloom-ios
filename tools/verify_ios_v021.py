@@ -150,8 +150,9 @@ def main():
        bool(re.search(r'h3\{font-size:var\(--fs-section\)', new)))
 
     print('== F-03：不写死内网地址 ==')
-    ok('bundle 内不含内网 IP', '192.168.50.' not in new,
-       f'出现 {new.count("192.168.50.")} 次' if '192.168.50.' in new else '0 处')
+    private = re.findall(r'(?:192\.168|10|172\.(?:1[6-9]|2\d|3[01]))\.\d{1,3}\.\d{1,3}', new)
+    ok('bundle 内不含内网地址', not private,
+       f'出现 {len(private)} 次: {private[:2]}' if private else '0 处')
     ok('默认服务器地址为空串', "localStorage.getItem(XB_SERVER_KEY)||''" in new)
     ok('未配置时 absURL 不拼主机', 'const base=xbReadServer();if(!base)return path;' in new)
     ok('首次启动自动弹出配置面板', "if(!xbReadServer()){" in new and "xbIosServerHint" in new)
