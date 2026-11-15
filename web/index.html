@@ -350,9 +350,8 @@ body{padding-bottom:92px}
 @media(max-width:520px){
 .ai-param-grid.cols-3{grid-template-columns:repeat(3,minmax(0,1fr))}
 .ai-param-grid.cols-3 .ai-param:nth-child(2){border-right:1px solid var(--line)}
-.ai-param-grid.cols-4{grid-template-columns:repeat(2,minmax(0,1fr))}
-.ai-param-grid.cols-4 .ai-param:nth-child(2){border-right:0}
-.ai-param-grid.cols-4 .ai-param:nth-child(1),.ai-param-grid.cols-4 .ai-param:nth-child(2){border-bottom:1px solid var(--line)}
+/* v2.5.1：设计稿是一行四列。此前这里被覆盖成 2 列，四个参数排成 2×2。 */
+.ai-param-grid.cols-4{grid-template-columns:repeat(4,minmax(0,1fr))}
 .base-param-grid.cols-4{grid-template-columns:repeat(2,minmax(0,1fr))}
 .base-param-grid.cols-3{grid-template-columns:repeat(3,minmax(0,1fr))}
 .base-detail-row,.ai-evidence-row{grid-template-columns:1fr;gap:2px}
@@ -361,6 +360,61 @@ body{padding-bottom:92px}
 /* ---- v1.4 unified parameter body & pour bars ---- */
 .extract-top{display:flex;flex-direction:column;gap:10px}
 .extract-top-row{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.xb-status-row{display:flex;gap:14px;flex-wrap:wrap;margin:10px 0 0;font-size:var(--fs-body);color:var(--muted)}
+.xb-status-row .xb-dot-item{display:inline-flex;align-items:center;gap:6px;min-width:0;padding:0;border-radius:0;background:transparent;font-weight:400}
+.xb-status-row .xb-dot{width:7px;height:7px;border-radius:50%;background:var(--muted);flex:0 0 auto}
+.xb-status-row .xb-dot-item.ok{color:var(--ok)}
+.xb-status-row .xb-dot-item.ok .xb-dot{background:var(--ok)}
+.xb-status-row .xb-dot-item.warn{color:var(--warn)}
+.xb-status-row .xb-dot-item.warn .xb-dot{background:var(--warn)}
+.xb-tabbar{display:flex;gap:6px;margin:14px 0 12px;padding:4px;border-radius:14px;background:var(--soft)}
+.xb-tab{flex:1 1 0;min-width:0;border:0;background:transparent;border-radius:11px;padding:9px 10px;font:inherit;font-size:var(--fs-body-lg);font-weight:400;color:var(--muted);cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px}
+.xb-tab.active{background:#fff;color:var(--text);font-weight:700;box-shadow:0 1px 3px rgba(0,0,0,.07)}
+.xb-tab:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.xb-tab-ver{font-size:var(--fs-caption);font-weight:700;color:var(--muted)}
+.xb-tab.active .xb-tab-ver{color:var(--accent)}
+.xb-tab-panel{padding-top:2px}
+.xb-primary-action{margin:16px 0 4px}
+.xb-primary-action .action{width:100%;min-height:46px}
+/* v2.5.1：设计稿里折叠项是独立白色圆角卡片，右侧带灰色提示文字 */
+.xb-fold{margin-top:10px;background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:0 14px}
+.xb-fold>summary{display:flex;align-items:center;gap:10px;cursor:pointer;font-size:var(--fs-body-lg);font-weight:700;color:var(--text);list-style:none;min-height:48px}
+.xb-fold>summary .xb-fold-hint{margin-left:auto;font-size:var(--fs-body);font-weight:400;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.xb-fold>summary::after{margin-left:0}
+.xb-fold>summary::-webkit-details-marker{display:none}
+.xb-fold>summary::after{content:"";margin-left:auto;width:8px;height:8px;border-right:2px solid currentColor;border-bottom:2px solid currentColor;transform:rotate(45deg);transition:transform .18s ease}
+.xb-fold[open]>summary::after{transform:rotate(-135deg)}
+.xb-fold>summary:focus-visible{outline:2px solid #c3a187;outline-offset:2px;border-radius:8px}
+.xb-fold-body{padding:2px 0 12px;border-top:1px dashed var(--line);margin-top:2px}
+/* v2.6.0 调整页 */
+.adjust-target{margin-top:8px;font-size:var(--fs-body);color:var(--muted)}
+.adjust-target b{color:var(--text);font-weight:700}
+.adjust-primary{margin-top:14px}
+.adjust-primary .action{width:100%;min-height:46px}
+.version-current-card{margin-top:12px;padding:12px 14px;border:1px solid var(--line);border-radius:14px;background:#fff}
+.version-card-head{display:flex;align-items:baseline;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.version-card-head b{font-size:var(--fs-body-lg);font-weight:700;color:var(--text)}
+.version-card-meta{margin-top:6px;font-size:var(--fs-body);color:var(--muted)}
+.version-card-params{margin-top:6px;font-size:var(--fs-body);color:var(--text);overflow-wrap:anywhere}
+.version-candidate-list{display:grid;gap:10px;margin-top:10px}
+.version-candidate-card{padding:12px 14px;border:1px solid var(--line);border-radius:14px;background:#faf6f0}
+.version-candidate-card.archive{background:var(--panel)}
+.candidate-diff{margin-top:8px;font-size:var(--fs-body);line-height:1.6;color:var(--text);overflow-wrap:anywhere}
+.candidate-diff .dim{color:var(--muted)}
+.candidate-actions{margin-top:10px;display:flex;gap:8px;flex-wrap:wrap}
+.candidate-note{margin-top:6px;font-size:var(--fs-caption);color:var(--warn)}
+.ai-advice-status{display:flex;align-items:center;gap:6px;font-size:var(--fs-body);color:var(--ok);margin-bottom:8px}
+.ai-advice-status .xb-dot{width:7px;height:7px;border-radius:50%;background:currentColor;flex:0 0 auto}
+.xb-sub-label{font-size:var(--fs-body);color:var(--muted);margin-top:14px}
+.ai-bar-grid{display:flex;gap:10px;margin-top:12px;align-items:flex-end}
+.ai-bar-col{flex:1 1 0;min-width:0;text-align:center;border-left:1px solid var(--line);padding:0 2px}
+.ai-bar-col:first-child{border-left:0}
+.ai-bar-track{height:132px;display:flex;flex-direction:column;justify-content:flex-end;align-items:center}
+.ai-bar{width:84%;max-width:104px;background:#E7E6EC;border-radius:18px}
+.ai-bar-col .ai-bar-ml{font-size:var(--fs-body-lg);font-weight:400;color:#111;margin-bottom:14px}
+.ai-bar-col .ai-bar-name{font-size:var(--fs-body);color:var(--muted);margin-top:9px}
+.ai-bar-col .ai-bar-pct{font-size:var(--fs-body);font-weight:700;color:var(--text);margin-top:4px}
+
 .extract-dripper{display:flex;align-items:center;gap:8px;min-width:0;flex-wrap:wrap}
 .extract-dripper .param-k{font-size:var(--fs-body);font-weight:400;color:var(--muted)}
 .extract-dripper select{min-height:44px;max-width:320px}
@@ -401,7 +455,9 @@ body{padding-bottom:92px}
 .param-cell .param-k{display:block;font-size:var(--fs-body);font-weight:400;color:#666;line-height:1.5;text-align:center}
 .param-cell .param-v{display:block;font-size:var(--fs-value);font-weight:600;line-height:1.25;color:#111;text-align:center;overflow-wrap:anywhere;margin-top:2px}
 .param-cell .param-u{font-style:normal;font-size:var(--fs-caption);font-weight:400;color:#666;margin-left:2px}
-.pour-bars{display:flex;gap:0;overflow-x:auto;padding:8px 0 6px;margin-top:10px;border-left:1px solid #ddd;border-right:1px solid #ddd;-webkit-overflow-scrolling:touch}
+/* v2.5.1：设计稿的注水区是一个白色圆角卡片，列分隔线在卡片内部 */
+.pour-bars{display:flex;gap:0;overflow-x:auto;padding:10px 4px 8px;margin-top:10px;background:var(--panel);border:1px solid var(--line);border-radius:14px;-webkit-overflow-scrolling:touch}
+.ai-bar-grid{display:flex;gap:0;margin-top:10px;align-items:stretch;background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:10px 4px 8px}
 /* Columns share the row width on every screen: the constraint is the pane width,
    not the viewport, so no width media query here. min-width keeps a readable
    floor and lets .pour-bars scroll horizontally when stages cannot fit. */
@@ -415,6 +471,7 @@ body{padding-bottom:92px}
 .pour-bar-temp{display:flex;align-items:center;justify-content:center;gap:5px;font-size:var(--fs-body);color:#555;line-height:1.45;text-align:center;margin-top:16px}
 .pour-temp-icon{width:12px;height:12px;flex:0 0 auto;color:#8a8a8a}
 .pour-bar-dur{font-size:var(--fs-body);color:#59606a;line-height:1.45;text-align:center;margin-top:4px}
+.pour-bar-flow{margin-top:4px;font-size:var(--fs-caption);color:var(--muted);text-align:center;line-height:1.4}
 .pour-bar-more{margin-top:2px;font-size:var(--fs-caption);color:var(--muted);text-align:center;max-width:100%}
 .pour-bar-more summary{cursor:pointer;color:#8a7f75;list-style:none}
 .pour-bar-more summary::-webkit-details-marker{display:none}
@@ -622,7 +679,8 @@ html.xb-ios-p0.xb-server-bridge-ready .xb-p0b-server-float {display:none!importa
     line-height:1.4;overflow-wrap:anywhere;
   ;font-size:var(--fs-body)}
   /* Current version, dripper and Ready stay visible: no data is hidden. */
-  html.xb-ios-p0 body.ios-app #readyBadge{flex-shrink:0;max-width:100%;}
+  html.xb-ios-p0 body.ios-app #readyBadge,
+  html.xb-ios-p0 body.ios-app #extractStatusRow{flex-shrink:0;max-width:100%;flex-wrap:wrap;}
   html.xb-ios-p0 body.ios-app #detailExtractionPane .session-dripper{
     display:grid;grid-template-columns:minmax(0,1fr);gap:7px;margin-top:11px;
   }
@@ -731,7 +789,7 @@ html.xb-ios-p0 body.ios-app #xbP2BViewer .xb-p2b-hint{position:absolute;bottom:m
 @media(prefers-reduced-motion:reduce){html.xb-ios-p0 body.ios-app #xbP2BViewer *{transition:none!important}}
 </style>
 
-<style id="XB_IOS_V021_REBASE">
+<style id="XB_IOS_V030_REBASE">
 /* iOS-only alignment after the v1.9.2 type scale. Additive: every rule is gated on
    html.xb-ios-p0 body.ios-app, and no rule overrides a font-size token -- the App
    must render on the same 7-step scale as the web. */
@@ -835,49 +893,70 @@ html.xb-ios-p0 body.ios-app .param-cell{padding:12px 6px}
        <div class="extract-dripper"><span class="param-k">当前所选滤杯</span><select id="extractionDripperSelect" aria-label="当前所选滤杯"></select><span class="status-chip" id="extractionDripperStatus">状态待确认</span></div>
        <div class="actions"><button class="action secondary" type="button" id="openDripperBaselineBtn">查看滤杯实验基准</button><button class="action secondary hidden" id="adaptDripperBtn">历史：生成候选</button></div>
      </div>
-     <div class="muted" id="extractionSourceHint">当前版本的核心冲煮参数</div>
-     <div id="readyBadge"></div>
-   </div>
-   <details class="compact-details section-gap" id="extractionProfileDetails" hidden><summary>历史实验方案（仅兼容历史记录）</summary><div class="muted">以下预览不更改 Current；仅人工生成 Candidate 并验证后才可 Promote。</div><select id="extractionProfileSelect" style="width:100%;min-height:42px;margin-top:8px"></select><div class="actions"><button class="action secondary" id="extractionProfilePreviewBtn">查看差异</button><button class="action" id="extractionProfileCreateBtn">生成实验 Candidate</button></div><div id="extractionProfileResult" class="validation" style="white-space:pre-wrap;margin-top:8px"></div></details>
-   <div class="extract-block first">
-     <h3 class="block-title">AI</h3>
-     <div class="muted">根据当前咖啡豆与所选滤杯生成的个性化研究配方，不创建 Candidate。</div>
-     <div id="firstRecipeAiCard" role="status" aria-live="polite"></div>
+     <div class="muted hidden" id="extractionSourceHint">当前版本的核心冲煮参数</div>
    </div>
 
-   <div class="extract-block">
-     <h3 class="block-title" id="machineRecipeTitle">规则候选配方</h3>
-     <div class="muted" id="machineRecipeSubtitle">由咖啡豆规则与滤杯配置生成；与上方 AI 研究配方独立。</div>
-     <div class="muted" id="candidateMetricSummary"></div>
+   <div class="xb-status-row" id="extractStatusRow" role="status" aria-live="polite">
+     <span class="xb-dot-item warn" id="extractStatusValidated"><i class="xb-dot"></i><span>待校验</span></span>
+     <span class="xb-dot-item warn" id="extractStatusSynced"><i class="xb-dot"></i><span>待同步</span></span>
+   </div>
+
+   <div class="xb-tabbar" role="tablist" aria-label="萃取视图切换">
+     <button class="xb-tab active" type="button" role="tab" aria-selected="true" aria-controls="extractCurrentPanel" id="extractTabCurrent">当前配方<span class="xb-tab-ver" id="extractTabCurrentVer"></span></button>
+     <button class="xb-tab" type="button" role="tab" aria-selected="false" aria-controls="extractAiPanel" id="extractTabAi">AI 建议</button>
+   </div>
+
+   <div class="xb-tab-panel" id="extractCurrentPanel" role="tabpanel" aria-labelledby="extractTabCurrent">
      <div id="extractionRecipeState" class="validation section-gap hidden"></div>
      <div class="param-grid param-grid-3" id="extractMetricCards"></div>
-     <div class="muted" id="pourOwnerHint" style="margin-top:14px">按照机器配方逐段展示注水量、温度、时长、水流与方式</div>
+     <div class="xb-sub-label">注水</div>
      <div class="pour-bars" id="pourCards"></div>
+     <div class="muted" id="pourOwnerHint" style="margin-top:8px">该版本逐段注水</div>
      <div class="recipe-lines hidden" id="currentRows"></div>
      <div class="metrics hidden" id="metrics"></div>
+     <div class="xb-primary-action"><button class="action" id="cloudSyncBtn">同步到 xBloom 云端</button></div>
+
+     <details class="xb-fold" id="validationDetails">
+       <summary>校验详情<span class="xb-fold-hint" id="validationHint">内部通过 · 外部 PASS</span></summary>
+       <div class="xb-fold-body">
+         <div class="muted" id="machineRecipeSubtitle" style="margin-bottom:8px"></div>
+         <div class="detail-section-head validation-header"><h3>配方校验</h3><button type="button" class="action secondary" id="validateBtn">↻ 重新校验</button></div>
+         <div class="validation" id="validationBox"></div>
+       </div>
+     </details>
+
+     <details class="xb-fold" id="cloudDetails">
+       <summary>云端详情<span class="xb-fold-hint">云端配方 · 槽位 · 最近同步</span></summary>
+       <div class="xb-fold-body">
+         <section class="cloud-state-card" id="cloudWorkflowBox">
+           <div class="detail-section-head">
+             <div><h3>xBloom 云端</h3><div class="muted">按当前版本判断同步状态</div></div>
+             <span id="cloudSyncBadge" class="status warn">待同步</span>
+           </div>
+           <div class="bean-info-table">
+             <div class="row"><span>云端配方</span><b id="cloudRecipeName">—</b></div>
+             <div class="row"><span>最近同步</span><b id="cloudLastSync">—</b></div>
+             <div class="row"><span>应用槽位</span><b id="cloudAppSlot">未分配</b></div>
+           </div>
+           <div class="muted section-gap">应用槽位只作为网站记录。实际 A / B / C 分配仍需在 xBloom 应用中完成，再由应用通过蓝牙写入机器。</div>
+         </section>
+         <div class="actions section-gap"><button class="action secondary" id="cloudListBtn">查看云端配方</button></div>
+       </div>
+     </details>
+
+     <details class="xb-fold" id="afterBrewDetails">
+       <summary>冲后怎么调<span class="xb-fold-hint">记录反馈 · 不改当前版本</span></summary>
+       <div class="xb-fold-body">
+         <div class="muted">喝完觉得不对，去「调整」页记录这次最明显的问题（太酸 / 太淡 / 发涩 …），系统会按症状给出下一版候选。记录不会改动当前版本。</div>
+         <div class="actions section-gap"><button class="action secondary" type="button" id="xbGoAdjustBtn">去调整页记录反馈</button></div>
+       </div>
+     </details>
    </div>
-  </section>
 
-  <section class="card section-gap">
-    <div class="detail-section-head validation-header"><h3>配方校验</h3><button type="button" class="action secondary" id="validateBtn">↻ 重新校验</button></div>
-    <div class="validation" id="validationBox"></div>
-  </section>
-
-  <section class="card section-gap cloud-state-card" id="cloudWorkflowBox">
-    <div class="detail-section-head">
-      <div><h3>xBloom 云端</h3><div class="muted">按当前版本判断同步状态</div></div>
-      <span id="cloudSyncBadge" class="status warn">待同步</span>
-    </div>
-    <div class="bean-info-table">
-      <div class="row"><span>云端配方</span><b id="cloudRecipeName">—</b></div>
-      <div class="row"><span>最近同步</span><b id="cloudLastSync">—</b></div>
-      <div class="row"><span>应用槽位</span><b id="cloudAppSlot">未分配</b></div>
-    </div>
-    <div class="muted section-gap">应用槽位只作为网站记录。实际 A / B / C 分配仍需在 xBloom 应用中完成，再由应用通过蓝牙写入机器。</div>
-  </section>
-
-  <section class="card section-gap">
-    <div class="operation-group section-gap"><b>云端</b><div class="actions section-gap"><button class="action" id="cloudSyncBtn">同步到 xBloom 云端</button><button class="action secondary" id="cloudListBtn">查看云端配方</button></div></div>
+   <div class="xb-tab-panel hidden" id="extractAiPanel" role="tabpanel" aria-labelledby="extractTabAi">
+     <div class="ai-advice-status" id="aiAdviceStatus"><i class="xb-dot"></i><span>AI 研究配方已生成</span></div>
+     <div id="firstRecipeAiCard" role="status" aria-live="polite"></div>
+   </div>
   </section>
 
   <details class="recipe-tool-details section-gap" id="recipeToolsDetails">
@@ -896,65 +975,78 @@ html.xb-ios-p0 body.ios-app .param-cell{padding:12px 6px}
     </div>
   </details>
 
+  <details class="compact-details section-gap" id="extractionProfileDetails" hidden><summary>历史实验方案（仅兼容历史记录）</summary><div class="muted">以下预览不更改 Current；仅人工生成 Candidate 并验证后才可 Promote。</div><select id="extractionProfileSelect" style="width:100%;min-height:42px;margin-top:8px"></select><div class="actions"><button class="action secondary" id="extractionProfilePreviewBtn">查看差异</button><button class="action" id="extractionProfileCreateBtn">生成实验 Candidate</button></div><div id="extractionProfileResult" class="validation" style="white-space:pre-wrap;margin-top:8px"></div></details>
  </main>
 </section>
 
 
   <section id="detailAdjustPane" class="detail-pane hidden">
-   <main>
-    <section class="card">
-      <div class="detail-section-head"><div><h3>记录冲煮反馈</h3><div class="muted">选本次最明显的冲煮问题，保存后按症状生成下一版候选。历史内容默认收起。</div></div><button class="action secondary" id="generateInitialBtn">生成首版候选</button></div>
-      <div class="adjust-context section-gap"><span class="status ok" id="adjustCurrentVersion">当前版本 —</span><span class="status" id="adjustCurrentDripper">滤杯 —</span></div>
-      <div id="latestTastingBox" class="latest-tasting-card section-gap"><div class="muted">还没有冲煮反馈。</div></div>
-      <div class="workflow-actions section-gap"><button class="action" id="recordTastingTopBtn">记录冲煮反馈</button></div>
-      <div class="symptoms hidden" id="symptoms"></div>
-      <div class="adjust-advice-card section-gap" id="adjustAdviceBox"><b>系统建议</b><div class="muted" style="margin-top:8px">记录冲煮反馈后，这里会自动显示综合建议。</div></div>
-      <details class="compact-details section-gap" id="aiAdvancedRecord">
-        <summary>高级（可选）：AI 配方实测评分与 V2 优化</summary>
-        <div class="muted" style="margin:8px 0">日常调整走上面的症状记录就够了。这里只在想给 AI 第一配方打 1–5 分、并生成 V2 时使用；不填不影响任何流程。</div>
-        <div class="actions"><button class="action secondary" type="button" id="openAiBrewFeedback">记录 AI 配方实测评分</button></div>
-        <div class="muted" id="aiBrewEntryHint" style="margin-top:8px">先在「萃取」页加载 AI 配方；V2/V3 优化均需主动操作，不会自动生成。</div>
-      </details>
-    </section>
-
-    <section class="card section-gap">
-      <div class="detail-section-head"><div><h3>最新候选</h3><div class="muted">只展示最近一次候选的变化；旧候选收进版本管理。</div></div></div>
-      <div class="compare" style="display:block">
-        <div class="box next"><b id="nextTitle">等待冲煮反馈</b><div id="nextRows"></div></div>
+ <main>
+  <section class="card">
+    <h3>记录冲煮反馈</h3>
+    <div class="muted">冲完后选最明显的问题，保存后按症状生成下一版候选。</div>
+    <div class="adjust-target" id="adjustTarget">针对 当前 v— · 滤杯 —</div>
+    <div class="actions adjust-primary"><button class="action" id="recordTastingTopBtn">记录冲煮反馈</button></div>
+    <div class="actions section-gap"><button class="action secondary hidden" id="generateInitialBtn">生成首版候选</button></div>
+    <div class="symptoms hidden" id="symptoms"></div>
+    <details class="xb-fold section-gap hidden" id="recentFeedbackDetails">
+      <summary>最近反馈与建议<span class="xb-fold-hint" id="recentFeedbackHint">暂无记录</span></summary>
+      <div class="xb-fold-body">
+        <div id="latestTastingBox" class="latest-tasting-card"></div>
+        <div class="adjust-advice-card section-gap" id="adjustAdviceBox"></div>
       </div>
-      <div class="validation section-gap" id="reason">保存反馈并生成调整方案后，这里显示候选变化。</div>
-      <div class="actions section-gap"><button class="action hidden" id="saveCandidateBtn">保存候选</button></div>
-      <div id="compareCurrent" class="hidden"></div>
-    </section>
-
-    <section class="card section-gap">
-      <details class="compact-details" id="versionManagementDetails"><summary>版本管理 · 按滤杯查看完整冲煮配方</summary><div class="muted" style="margin:10px 0">每一版记录滤杯、粉量、研磨、总水量及每段 Pattern。旧版若缺少滤杯元数据则明确标注“历史未记录”。</div>
-        <div class="actions section-gap"><button class="action secondary" id="historyBtn">刷新版本</button><button class="action secondary" id="importBtn">导入配方</button></div>
-        <div class="history-block" id="history"></div>
-        <div class="section-gap promotion-panel" id="promotionSummary"><div id="promotionCandidateList"><div class="muted">暂无候选版本。</div></div></div>
-      </details>
-    </section>
-
-    <section class="card section-gap">
-      <details class="compact-details" id="tastingHistoryDetails"><summary>冲煮历史对比 <span class="muted" id="tastingHistoryCount"></span></summary>
-        <div class="detail-section-head section-gap"><div class="muted">选择两次记录比较症状、滤杯和调整变化。</div><button class="action secondary" id="refreshTastingHistoryBtn">刷新</button></div>
-        <div class="history-picker section-gap"><button class="history-pick-card" id="tastingCompareACard">选择较早记录</button><div class="arrow">↕</div><button class="history-pick-card" id="tastingCompareBCard">选择较新记录</button></div>
-        <div id="tastingRecordChooser" class="history-record-menu hidden"></div>
-        <input type="hidden" id="tastingCompareA"><input type="hidden" id="tastingCompareB">
-        <div id="tastingCompareBox" class="section-gap"><div class="muted">有两条以上冲煮记录后可进行对比。</div></div>
-        <div id="tastingHistoryList" class="tasting-history-list section-gap"><div class="muted">暂无冲煮历史。</div></div>
-      </details>
-    </section>
-
-    <section class="card section-gap">
-      <details class="compact-details" id="timelineDetails"><summary>配方版本时间线</summary>
-        <div class="actions section-gap"><button class="action secondary" id="refreshTimelineBtn">刷新时间线</button><button class="action secondary" id="toggleTimelineBtn">查看全部</button></div>
-        <div id="versionTimeline" class="version-timeline compact-timeline"><div class="muted">暂无记录</div></div>
-      </details>
-    </section>
-   </main>
+    </details>
   </section>
- </div>
+
+  <section class="card section-gap">
+    <div class="detail-section-head"><div><h3>版本管理</h3><div class="muted" id="versionManagerSummary">—</div></div></div>
+    <div class="adjust-context section-gap"><span class="status ok" id="adjustCurrentVersion">当前版本 —</span><span class="status" id="adjustCurrentDripper">滤杯 —</span></div>
+    <div id="currentVersionSummary" class="version-current-card"></div>
+    <div id="promotionCandidateList" class="version-candidate-list"></div>
+    <details class="xb-fold section-gap hidden" id="archivePoolDetails">
+      <summary>归档候选<span class="xb-fold-hint" id="archivePoolHint"></span></summary>
+      <div class="xb-fold-body"><div id="archivePoolList"></div></div>
+    </details>
+    <div class="actions section-gap"><button class="action secondary" id="historyBtn">刷新版本</button><button class="action secondary" id="importBtn">导入配方</button></div>
+    <details class="xb-fold section-gap" id="allVersionsDetails">
+      <summary>全部版本<span class="xb-fold-hint" id="allVersionsHint">含分段参数</span></summary>
+      <div class="xb-fold-body">
+        <div class="muted section-gap">每一版记录滤杯、粉量、研磨、总水量及每段 Pattern。旧版若缺滤杯元数据会标注「历史未记录」。Collective 参考若未记录，表示没有可比对的来源，不代表无匹配。</div>
+        <div class="history-block" id="history"></div>
+      </div>
+    </details>
+    <div class="hidden" aria-hidden="true"><b id="nextTitle">候选变化</b><div id="nextRows"></div><div id="reason"></div><div id="compareCurrent"></div><button class="action hidden" id="saveCandidateBtn">保存候选</button></div>
+  </section>
+
+  <details class="xb-fold section-gap" id="timelineDetails">
+    <summary>配方时间线<span class="xb-fold-hint" id="timelineHint">暂无记录</span></summary>
+    <div class="xb-fold-body">
+      <div class="actions section-gap"><button class="action secondary" id="refreshTimelineBtn">刷新时间线</button><button class="action secondary" id="toggleTimelineBtn">查看全部</button></div>
+      <div id="versionTimeline" class="version-timeline compact-timeline"><div class="muted">暂无记录</div></div>
+    </div>
+  </details>
+
+  <details class="xb-fold section-gap" id="tastingHistoryDetails">
+    <summary>冲煮历史对比<span class="xb-fold-hint" id="tastingHistoryHint">暂无记录</span></summary>
+    <div class="xb-fold-body">
+      <div class="detail-section-head section-gap"><div class="muted">选择两次记录比较症状、滤杯和调整变化。</div><button class="action secondary" id="refreshTastingHistoryBtn">刷新</button></div>
+      <div class="history-picker section-gap"><button class="history-pick-card" id="tastingCompareACard">选择较早记录</button><div class="arrow">↕</div><button class="history-pick-card" id="tastingCompareBCard">选择较新记录</button></div>
+      <div id="tastingRecordChooser" class="history-record-menu hidden"></div>
+      <input type="hidden" id="tastingCompareA"><input type="hidden" id="tastingCompareB">
+      <div id="tastingCompareBox" class="section-gap"><div class="muted">有两条以上冲煮记录后可进行对比。</div></div>
+      <div id="tastingHistoryList" class="tasting-history-list section-gap"><div class="muted">暂无冲煮历史。</div></div>
+    </div>
+  </details>
+
+  <details class="xb-fold section-gap" id="aiAdvancedRecord">
+    <summary>AI 配方实测评分<span class="xb-fold-hint">可选 · 不影响日常流程</span></summary>
+    <div class="xb-fold-body">
+      <div class="muted">给「萃取」页的 AI 研究配方打 1–5 分并生成 V2；V2/V3 都需要你主动点。</div>
+      <div class="actions section-gap"><button class="action secondary" type="button" id="openAiBrewFeedback">记录 AI 配方实测评分</button></div>
+      <div class="muted" id="aiBrewEntryHint" style="margin-top:8px">先在「萃取」页加载 AI 配方。</div>
+    </div>
+  </details>
+ </main>
 </section>
 
 
@@ -1289,7 +1381,7 @@ html.xb-ios-p0 body.ios-app .param-cell{padding:12px 6px}
 <script>
 const $=s=>document.querySelector(s);
 
-/* XB_IOS_V021_SHIM - Capacitor API endpoint adapter + iOS-safe server editor.
+/* XB_IOS_V030_SHIM - Capacitor API endpoint adapter + iOS-safe server editor.
    Sizes use the page type tokens so the App shares the web's 7-step scale. */
 const XB_SERVER_KEY='xbloom_ios_server_url';
 function xbReadServer(){let s=localStorage.getItem(XB_SERVER_KEY)||'';return s.replace(/\/+$/,'');}
@@ -1476,6 +1568,7 @@ function renderCloudWorkflow(state){
  const s=state||{};
  $("#cloudSyncBadge").textContent=s.synced?"已同步":"待同步";
  $("#cloudSyncBadge").className="status "+(s.synced?"ok":"warn");
+ if(typeof xbUpdateExtractStatus==="function")xbUpdateExtractStatus();
  $("#cloudRecipeName").textContent=s.cloud_name||"—";
  $("#cloudLastSync").textContent=s.last_sync||"—";
  $("#cloudAppSlot").textContent=s.slot?`槽位 ${s.slot}`:"未分配";
@@ -1693,22 +1786,58 @@ function xbMachineSource(context){
  if(engine==="profile_rules")return "规则生成";
  return "生成来源待核实";
 }
+/* 机器配方的版本号只有一处判断来源：候选态取候选版本，当前态取当前版本。
+   v2.4.2 前这里有两套各自实现的 fallback：标题用 currentVersion（对），
+   摘要却写成 candidateVersion||currentVersion（错）。当豆子「已有更高的 Current，
+   同时还挂着一个更低的旧候选」时（例：SOE current=1.1、candidates=[1.0]），
+   摘要就把候选的版本号贴在「当前版本」四个字后面，而数字全部来自当前版本 ——
+   标签是候选的、数据是当前的。 */
+function xbMachineVersion(isCandidate,candidateVersion){
+ const v=isCandidate?(candidateVersion||currentVersion):(currentVersion||candidateVersion);
+ return (v==null||v==="")?"—":String(v);
+}
 function xbCandidateSubtitle(context){
  const c=context||{}, fields=c.ai_accepted_fields, engine=c.engine;
  const dripper=c.dripper_label||(c.dripper?zhDripper(c.dripper):"历史未记录滤杯");
- const version=latestRecipeCandidate?.version||currentVersion||"—";
+ const version=currentVersion||latestRecipeCandidate?.version||"—";
  const source=xbMachineSource(c);
  const selectedDripper=$("#extractionDripperSelect")?.value||"omni2";
  const mismatch=c.dripper&&c.dripper!==selectedDripper
    ?`该候选配方属于 ${dripper}，与本次选择的滤杯不同。`:"";
  return {version,dripper,source,mismatch};
 }
+
+/* ==== v2.5.0 萃取页双标签 ==== */
+function xbExtractTab(which){
+ const cur=$("#extractCurrentPanel"),ai=$("#extractAiPanel");
+ const tc=$("#extractTabCurrent"),ta=$("#extractTabAi");
+ if(!cur||!ai||!tc||!ta)return;
+ const isAi=which==="ai";
+ cur.classList.toggle("hidden",isAi);
+ ai.classList.toggle("hidden",!isAi);
+ tc.classList.toggle("active",!isAi); ta.classList.toggle("active",isAi);
+ tc.setAttribute("aria-selected",String(!isAi)); ta.setAttribute("aria-selected",String(isAi));
+}
+function xbUpdateExtractStatus(){
+ const cloud=$("#cloudSyncBadge");
+ const synced=!!(cloud&&cloud.classList.contains("ok"));
+ const syncEl=$("#extractStatusSynced");
+ if(syncEl){syncEl.className="xb-dot-item "+(synced?"ok":"warn");
+   const lab=syncEl.querySelector("span"); if(lab)lab.textContent=synced?"已同步":"待同步";}
+ const box=$("#validationBox");
+ const txt=((box&&box.textContent)||"").trim();
+ const pass=txt.length>0&&!/尚未|暂无/.test(txt)&&/(PASS|READY|通过|XBLOOM_READY)/.test(txt);
+ const valEl=$("#extractStatusValidated");
+ if(valEl){valEl.className="xb-dot-item "+(pass?"ok":"warn");
+   const lab=valEl.querySelector("span");
+   if(lab)lab.textContent=pass?"已校验，可用于 xBloom":"待校验";}
+}
 function renderExtractionCards(recipe,source="current",candidateVersion=null,context=null){
  const state=$("#extractionRecipeState");
  if(!recipe){
    $("#extractMetricCards").innerHTML='<div class="muted" style="grid-column:1/-1;padding:10px">尚未生成萃取配方。</div>';
    $("#pourCards").innerHTML='<div class="muted">暂无注水数据</div>';
-   $("#extractionSourceHint").textContent="所选滤杯用于上方研究参考；机器配方独立归属";
+   /* v2.5.1：同上，空态说明已由状态行与空卡文案承担 */
    if($("#machineRecipeSubtitle"))$("#machineRecipeSubtitle").textContent="尚无机器配方 · 来源待核实";
    if($("#machineRecipeTitle"))$("#machineRecipeTitle").textContent="规则候选配方";
    if($("#candidateMetricSummary"))$("#candidateMetricSummary").textContent="";
@@ -1723,14 +1852,21 @@ function renderExtractionCards(recipe,source="current",candidateVersion=null,con
  const recipeDripper=context?.dripper||selectedBean?.dripper||"omni2";
  const owner=context?.dripper_label||(context?.dripper?zhDripper(context.dripper):"历史未记录滤杯");
  const machineInfo=xbCandidateSubtitle({...context,dripper_label:owner});
- $("#machineRecipeTitle").textContent=isCandidate?`规则候选配方 v${candidateVersion}`:`当前机器配方 v${currentVersion||"—"}`;
+ /* v2.5.1：当前页不再有独立大标题，版本号只在分段控件与注水归属里出现 */
+ const titleEl=$("#machineRecipeTitle");
+ if(titleEl)titleEl.textContent=isCandidate?`规则候选配方 v${xbMachineVersion(true,candidateVersion)}`:`当前机器配方 v${xbMachineVersion(false,candidateVersion)}`;
+ const tabVer=$("#extractTabCurrentVer");
+ if(tabVer)tabVer.textContent=" v"+xbMachineVersion(isCandidate,candidateVersion);
+
  const cr=recipe, shownTotal=(cr.pours||[]).reduce((s,p)=>s+Number(p.ml||0),0);
- const parts=[`${isCandidate?"候选":"当前版本"} v${candidateVersion||currentVersion||"—"}`,`归属滤杯 ${machineInfo.dripper}`,`粉量 ${cr.dose_g??"未知"}g`,`总水量 ${shownTotal||"未知"}mL`,`水温 ${cr.temp_c??"未知"}℃`,`研磨 ${cr.grind??"未知"}`,`粉水比 ${cr.ratio!=null?"1:"+cr.ratio:"未知"}`];
+ const parts=[`${isCandidate?"候选":"当前版本"} v${xbMachineVersion(isCandidate,candidateVersion)}`,`归属滤杯 ${machineInfo.dripper}`,`粉量 ${cr.dose_g??"未知"}g`,`总水量 ${shownTotal||"未知"}mL`,`水温 ${cr.temp_c??"未知"}℃`,`研磨 ${cr.grind??"未知"}`,`粉水比 ${cr.ratio!=null?"1:"+cr.ratio:"未知"}`];
  if(machineInfo.mismatch)parts.push(machineInfo.mismatch);
- $("#candidateMetricSummary").textContent=parts.join(" · ");
+ /* v2.5.1：摘要行的数字已全部由参数网格承载，不再重复输出 */
+ const sumEl=$("#candidateMetricSummary"); if(sumEl)sumEl.textContent=parts.join(" · ");
  $("#pourOwnerHint").textContent=`机器配方${isCandidate?`候选 v${candidateVersion}`:`当前版本 v${currentVersion}`} · 归属滤杯 ${owner}；以下为该版本注水详情`;
- $("#machineRecipeSubtitle").textContent=`${machineInfo.source} · 归属滤杯 ${machineInfo.dripper}${machineInfo.mismatch?" · "+machineInfo.mismatch:""}`;
- $("#extractionSourceHint").textContent=`机器配方：`+(isCandidate?`候选配方 v${candidateVersion}（尚未设为当前版本）`:`当前版本 v${currentVersion}`)+` · 归属滤杯 ${owner}（系统基准与 AI 第一配方按所选滤杯单独加载）`;
+ const subEl=$("#machineRecipeSubtitle");
+ if(subEl)subEl.textContent=`${machineInfo.source} · 归属滤杯 ${machineInfo.dripper}${machineInfo.mismatch?" · "+machineInfo.mismatch:""}`;
+ /* v2.5.1：这句与「注水」下方的归属行重复，只保留后者 */
  syncFirstRecipeDripper(recipeDripper);
  if(isCandidate){state.classList.remove("hidden");state.innerHTML=`<div class="candidate-heading"><span class="muted">配方已经生成，请确认参数和校验结果后，设为当前版本。</span><button class="action" type="button" id="setExtractionCurrentBtn">设为当前版本</button></div>`;$("#setExtractionCurrentBtn").onclick=()=>openPromoteDialog(candidateVersion);}else{state.innerHTML="";state.classList.add("hidden");}
  const pours=recipe.pours||[];
@@ -1758,7 +1894,8 @@ function xbPourBarsHtml(pours,recipe){
    const flow=p.flow_ml_s;
    const pattern=p.pattern||p.pour_pattern;
    const notes=[];
-   if(hasPause&&Number(sec)===0)notes.push("该段无停顿");
+   /* v2.5.1：「停 0 秒」已表达，不再重复提示 */
+   if(hasPause&&Number(sec)===0){}
    if(!hasPause&&hasDur&&Number(sec)===0)notes.push("该段注水时长为 0 秒");
    if(flow==null||flow==="")notes.push("该段未记录水流速度");
    if(ml==null||!Number.isFinite(ml))notes.push("该段未记录注水量");
@@ -1775,7 +1912,7 @@ function xbPourBarsHtml(pours,recipe){
      `<div class="pour-bar-temp" aria-label="水温 ${tempText}"><svg class="pour-temp-icon" viewBox="0 0 12 12" aria-hidden="true"><circle cx="6" cy="6" r="4.6" fill="none" stroke="currentColor" stroke-width="1.2"/><circle cx="6" cy="6" r="1.5" fill="currentColor"/></svg><span>${tempText}</span></div>`+
      `<div class="pour-bar-name">${esc(name)}</div>`+
      `<div class="pour-bar-dur" aria-label="${secKind} ${durText}">${durDisplay}</div>`+
-     `<details class="pour-bar-more"><summary>详情</summary><div>水流 ${flowText} · 方式 ${patternText}</div></details>`+
+     `<div class="pour-bar-flow">${flowText} · ${patternText}</div>`+
      (notes.length?`<div class="pour-data-note">${notes.join("；")}</div>`:"")+`</div>`;
  }).join("");
 }
@@ -1875,8 +2012,8 @@ let detailEpoch=0;
 function detailIsCurrent(id,epoch){return selected?.bean_id===id&&detailEpoch===epoch&&!$("#detailView").classList.contains("hidden")}
 async function openBean(id){
  const epoch=++detailEpoch;
- $("#latestTastingBox").textContent="正在加载反馈…";
- $("#adjustAdviceBox").textContent="正在加载建议…";
+ const rf=$("#recentFeedbackDetails"); if(rf)rf.classList.add("hidden");
+ $("#adjustAdviceBox").classList.add("hidden");$("#adjustAdviceBox").textContent="";
  $("#history").textContent="正在加载版本…";
  $("#promotionCandidateList").textContent="正在加载候选…";$("#tastingHistoryList").textContent="正在加载历史…";$("#tastingCompareBox").textContent="正在加载历史…";$("#versionTimeline").textContent="正在加载时间线…";
  $("#nextTitle").textContent="正在加载…";$("#nextRows").innerHTML="";$("#reason").textContent="";
@@ -1891,7 +2028,7 @@ async function openBean(id){
  $("#profileSource").textContent=[profileDisplayText(d.bean.source_note),d.bean.source_url].filter(Boolean).join("\n")||"资料来源未记录";$("#profileNotes").textContent=profileDisplayText(d.bean.notes)||"暂无备注";
  $("#beanRoast").textContent=labelRoast(d.bean.roast_level)||"—";$("#beanDripper").textContent=zhDripper(d.bean.dripper||"omni2");$("#beanType").textContent=zhBeanType(d.bean.bean_type);$("#beanOrigin").textContent=d.bean.origin||"—";$("#beanVariety").textContent=d.bean.variety||"—";$("#beanProcess").textContent=d.bean.process||"—";$("#beanRoaster").textContent=d.bean.roaster||"—";
  $("#imageArea").innerHTML=d.bean.image_url?`<img class="heroimg" src="${esc(absURL(d.bean.image_url))}" alt="${esc(d.bean.name)}包装">`:`<div class="img-placeholder">暂无图片</div>`;
- $("#readyBadge").innerHTML=stateBadge(currentReadiness);
+
  renderCloudWorkflow(d.summary?.cloud);
  const latestCandidate=d.latest_candidate||null;
  latestRecipeCandidate=latestCandidate;$("#recipeToolStatus").textContent="";
@@ -1907,9 +2044,9 @@ async function openBean(id){
    $("#currentRows").innerHTML=rowsHTML(recipeRows(currentRecipe));$("#compareCurrent").innerHTML=rowsHTML(recipeRows(currentRecipe));
    $("#validationBox").innerHTML=validationHTML(currentReadiness);
  }else{
-   $("#metrics").innerHTML="";$("#currentRows").innerHTML=latestCandidate?rowsHTML(recipeRows(latestCandidate.recipe)):'<div class="muted">尚无原生配方</div>';$("#compareCurrent").innerHTML="";$("#validationBox").innerHTML=latestCandidate?validationHTML(latestCandidate.readiness):'<div class="muted">尚无配方</div>';$("#readyBadge").innerHTML=latestCandidate?stateBadge(latestCandidate.readiness):stateBadge(null);
+   $("#metrics").innerHTML="";$("#currentRows").innerHTML=latestCandidate?rowsHTML(recipeRows(latestCandidate.recipe)):'<div class="muted">尚无原生配方</div>';$("#compareCurrent").innerHTML="";$("#validationBox").innerHTML=latestCandidate?validationHTML(latestCandidate.readiness):'<div class="muted">尚无配方</div>';
  }
- $("#nextRows").innerHTML="";$("#nextTitle").textContent="等待冲煮反馈";$("#reason").textContent="保存反馈并生成调整方案后，这里显示候选变化。";$("#history").innerHTML="";$("#yamlArea").classList.add("hidden");$("#rawArea").classList.add("hidden");$("#qrArea").classList.add("hidden");
+ $("#nextRows").innerHTML="";$("#nextTitle").textContent="候选变化";$("#reason").textContent="保存反馈并生成调整方案后，这里显示候选变化。";$("#history").innerHTML="";$("#yamlArea").classList.add("hidden");$("#rawArea").classList.add("hidden");$("#qrArea").classList.add("hidden");
  renderSymptoms();await showHistory();if(!detailIsCurrent(id,epoch))return;await loadLatestTastingAdjustment();if(!detailIsCurrent(id,epoch))return;await loadTastingHistoryComparison();if(!detailIsCurrent(id,epoch))return;
  syncDetailActionVisibility();focusDetailHeader();
 }
@@ -1954,7 +2091,9 @@ function resetTastingForm(){
 }
 function renderLatestRecommendation(rec,record,linkedCandidateVersion){
  const box=$("#adjustAdviceBox");
- if(!record){box.innerHTML='<b>调整建议</b><div class="muted" style="margin-top:8px">记录冲煮反馈后，这里会自动显示综合建议。</div>';return;}
+ if(!box)return;
+ /* v2.6.0：没有反馈时整块由外层折叠隐藏，这里只负责内容 */
+ if(!record){box.innerHTML="";return;}
  if(!rec){box.innerHTML='<b>调整建议</b><div class="muted" style="margin-top:8px">当前反馈暂时无法形成调整建议。</div>';return;}
  const reasons=rec.reasons||[];
  const changes=rec.changes||[];
@@ -1975,7 +2114,9 @@ async function loadLatestTastingAdjustment(){
    const x=await api(`/api/beans/${encodeURIComponent(id)}/tasting/latest`);
    if(!detailIsCurrent(id,epoch))return;
    const r=x.record;const box=$("#latestTastingBox");
-   if(!r){box.innerHTML='<div class="muted">还没有冲煮反馈。点击“记录冲煮反馈”开始。</div>';renderLatestRecommendation(null,null,null);renderIntakeCandidate();return;}
+   if(!r){box.innerHTML="";const f=$("#recentFeedbackDetails");if(f)f.classList.add("hidden");renderLatestRecommendation(null,null,null);renderIntakeCandidate();return;}
+   const f=$("#recentFeedbackDetails");if(f)f.classList.remove("hidden");
+   const fh=$("#recentFeedbackHint");if(fh){const nm=(x.symptom_labels||[]).length?x.symptom_labels.join(" / "):"未选择问题";fh.textContent=`v${r.recipe_version||"—"} · ${nm}`;}
    const labels=x.symptom_labels?.length?x.symptom_labels:((r.symptom||"")?[r.symptom]:[]);
    const obs=r.ai_observability||{};
    const debug=(obs.event==="fallback"||obs.event==="pre_ai_block")?`<div class="muted" style="margin-top:8px">调试：${esc(r.auto_engine||obs.engine||"")} · ${esc(obs.reason_code||"")}${obs.reason?` · ${esc(obs.reason)}`:""}</div>`:"";
@@ -2027,6 +2168,8 @@ async function loadTastingHistoryComparison(){
  try{
    const x=await api(`/api/beans/${encodeURIComponent(id)}/tasting/history`);if(!detailIsCurrent(id,epoch))return;tastingHistoryRecords=x.records||[];renderTastingHistoryList();
    $("#tastingHistoryCount").textContent=`${tastingHistoryRecords.length} 次`;
+   const thHint=$("#tastingHistoryHint");
+   if(thHint)thHint.textContent=tastingHistoryRecords.length?`${tastingHistoryRecords.length} 条记录`:"暂无记录";
    if(tastingHistoryRecords.length>=2){$("#tastingCompareA").value=tastingHistoryRecords[1].file;$("#tastingCompareB").value=tastingHistoryRecords[0].file;renderTastingComparison();}
    else{$("#tastingCompareA").value="";$("#tastingCompareB").value="";updateTastingPickCards();$("#tastingCompareBox").innerHTML='<div class="muted">有两条以上冲煮记录后可进行对比。</div>';}
  }catch(e){if(!detailIsCurrent(id,epoch))return;$("#tastingHistoryList").innerHTML=`<div class="muted">读取冲煮历史失败：${esc(e.message)}</div>`;}
@@ -2069,7 +2212,7 @@ $("#validateBtn").onclick=async()=>{
    if(currentVersion){currentReadiness=r;}
    else if(latestRecipeCandidate){latestRecipeCandidate.readiness=r;}
    $("#validationBox").innerHTML=validationHTML(r);
-   $("#readyBadge").innerHTML=stateBadge(r);
+  
  }catch(e){alert("重新校验失败："+e.message)}finally{btn.disabled=false;}
 };
 
@@ -2080,12 +2223,138 @@ function fmtTimelineTime(v){
  try{return new Date(v).toLocaleString("zh-CN",{hour12:false})}catch(e){return v}
 }
 
+function highlightTimelineSummary(timeline){
+ const hint=$("#timelineHint");
+ if(!hint)return;
+ const first=(timeline||[])[0];
+ if(!first){hint.textContent="暂无记录";return;}
+ const when=String(first.at||"").slice(5,10).replace("-","/");
+ hint.textContent=`${when} ${first.title||""}`.trim();
+}
 function renderVersionTimeline(events){
  const box=$("#versionTimeline");
  box.classList.remove("expanded");$("#toggleTimelineBtn").textContent="查看全部";
  box.innerHTML=(events||[]).map(e=>`<div class="timeline-item"><b>${esc(e.title||"版本记录")}</b><div class="timeline-time">${esc(fmtTimelineTime(e.at))}</div>${e.detail?`<div class="timeline-detail">${esc(e.detail)}</div>`:""}</div>`).join("")||'<div class="muted">暂无时间线记录</div>';
 }
 $("#toggleTimelineBtn").onclick=()=>{const b=$("#versionTimeline");b.classList.toggle("expanded");$("#toggleTimelineBtn").textContent=b.classList.contains("expanded")?"收起":"查看全部";};
+
+/* ==== v2.6.0 调整页：来源人话 + 版本管理对比 ==== */
+function zhEngineShort(engine){
+ const map={
+  manual_adjustment:"人工调整",
+  ai_constrained:"AI 微调",
+  ai_brew_advice:"AI 建议调整",
+  profile_rules:"规则生成",
+  profile_rules_ai_no_accepted_change:"规则生成（AI 未改动）",
+  rule_engine:"规则生成",
+  dripper_profile_delta:"滤杯基准调整",
+  legacy_unspecified:"历史记录（未记录来源）"
+ };
+ const key=String(engine||"");
+ if(map[key])return map[key];
+ if(!key)return "历史未记录来源";
+ return "来源待核实";
+}
+function zhVersionKind(kind){
+ const map={native:"原生版本",candidate:"候选版本",profile_candidate:"候选版本"};
+ return map[String(kind||"")]||"版本";
+}
+function candidateDiffText(changes,current){
+ if(!current)return "当前还没有版本，设为当前版本后会成为第一版。";
+ const all=(changes||[]);
+ if(!all.length)return "与当前版本参数相同。";
+ /* 顶层温度变了，逐段温度是同一处改动的回声，不再重复列 */
+ const tempChanged=all.some(c=>c.field==="temp_c");
+ const order=["水温","研磨度","闷蒸时长","粉量","粉水比","闷蒸注水量","闷蒸温度"];
+ const rank=c=>{const i=order.indexOf(c.label);return i<0?99:i;};
+ const kept=all
+   .filter(c=>!(tempChanged&&/^pours\.\d+\.temp_c$/.test(String(c.field||""))))
+   .sort((a,b)=>rank(a)-rank(b));
+ const head=kept.slice(0,3);
+ const parts=head.map(c=>{
+   const unit=c.unit||"";
+   return `${esc(c.label)} ${esc(c.after)}${esc(unit)}<span class="dim">（当前 ${esc(c.before)}${esc(unit)}）</span>`;
+ });
+ const rest=kept.length-head.length;
+ return "与当前不同："+parts.join("，")+(rest>0?`<span class="dim">，另有 ${rest} 项</span>`:"");
+}
+function versionParamsLine(x){
+ const r=(x&&x.recipe)||{};
+ const total=(r.pours||[]).reduce((a,p)=>a+(Number(p.ml)||0),0);
+ const parts=[`${esc(r.dose_g??"—")}g`,`研磨 ${esc(r.grind??"—")}`,`${esc(r.temp_c??"—")}℃`,`${esc(total)} mL`,`1:${esc(r.ratio??"—")}`];
+ return parts.join(" · ");
+}
+function renderVersionManager(diff,history){
+ const box=$("#currentVersionSummary"), hold=$("#promotionCandidateList");
+ if(!box||!hold)return;
+ const cur=diff&&diff.current;
+ const curVer=diff&&diff.current_version;
+ const ctx=history||{};
+ const nativeN=(ctx.native||[]).length, candN=(ctx.candidates||[]).length;
+ const sum=$("#versionManagerSummary");
+ if(sum)sum.textContent=`原生 ${nativeN} · 候选 ${candN}`;
+
+ // ---- 当前版本一行 ----
+ if(curVer&&cur){
+   const rc=(ctx.native||[]).find(x=>String(x.version)===String(curVer));
+   const bc=(rc&&rc.brew_card)||{};
+   const pours=((ctx.native||[]).find(x=>String(x.version)===String(curVer))?.recipe?.pours)||[];
+   const mlText=pours.length?`注水 ${pours.map(p=>esc(p.ml)).join(" / ")} mL`:"";
+   box.innerHTML=`<div class="version-card-head"><b>v${esc(curVer)} · 当前</b>${rc?stateBadge(rc.readiness):""}</div>`+
+     `<div class="version-card-meta">${esc(zhEngineShort(bc.engine))} · ${esc(bc.dripper_label||zhDripper(selectedBean?.dripper||"omni2"))}</div>`+
+     `<div class="version-card-params">${versionParamsLine({recipe:((ctx.native||[]).find(x=>String(x.version)===String(curVer))||{}).recipe})}</div>`+
+     (mlText?`<div class="version-card-meta">${mlText}</div>`:"");
+ }else{
+   box.innerHTML='<div class="muted">还没有当前版本。首个候选通过校验后可设为当前版本。</div>';
+ }
+
+ // ---- 候选卡：只写差异 ----
+ const cards=(diff&&diff.candidates)||[];
+ const promotable=cards.filter(x=>x.pool==="promotable");
+ const archive=cards.filter(x=>x.pool==="archive");
+ const cardHTML=(x)=>{
+   const isRollback=x.is_rollback===true;
+   return `<div class="version-candidate-card${isRollback?" archive":""}" data-version="${esc(x.version)}">`+
+     `<div class="version-card-head"><b>候选 v${esc(x.version)}</b>${isRollback?'<span class="muted">早于当前版本</span>':""}</div>`+
+     `<div class="version-card-meta">${esc(zhEngineShort(x.engine))}${x.pool==="archive"?" · 已归档":""}</div>`+
+     `<div class="candidate-diff">${candidateDiffText(x.changes,cur)}</div>`+
+     (isRollback?`<div class="candidate-note">设为当前版本会让配方退回到更早的一版。</div>`:"")+
+     `<div class="candidate-actions"><button class="action secondary promote-review" data-v="${esc(x.version)}">${isRollback?"回退到此版本":"检查并设为当前版本"}</button></div>`+
+   `</div>`;
+ };
+ hold.innerHTML=promotable.map(cardHTML).join("")||'<div class="muted">没有可晋升的候选。</div>';
+
+ // ---- 归档池 ----
+ const ap=$("#archivePoolDetails"), al=$("#archivePoolList"), ah=$("#archivePoolHint");
+ if(archive.length){
+   if(ap)ap.classList.remove("hidden");
+   if(ah)ah.textContent=`${archive.length} 个 · 早于当前版本`;
+   if(al)al.innerHTML=`<div class="version-candidate-list">${archive.map(cardHTML).join("")}</div>`;
+ }else{
+   if(ap)ap.classList.add("hidden");
+   if(al)al.innerHTML="";
+ }
+
+ document.querySelectorAll(".promote-review").forEach(btn=>btn.onclick=()=>openPromoteDialog(btn.dataset.v));
+}
+async function loadVersionManager(history){
+ if(!selected)return;
+ const id=selected.bean_id,epoch=detailEpoch;
+ try{
+   const d=await api(`/api/beans/${encodeURIComponent(id)}/candidates/diff`);
+   if(!detailIsCurrent(id,epoch))return;
+   renderVersionManager(d,history);
+   const target=$("#adjustTarget");
+   if(target){
+     const cur=d.current_version?`当前 v${esc(d.current_version)}`:"尚无当前版本";
+     target.innerHTML=`针对 <b>${cur}</b> · ${esc(zhDripper(selectedBean?.dripper||"omni2"))}`;
+   }
+   syncDetailActionVisibility();
+ }catch(e){
+   const hold=$("#promotionCandidateList");
+   if(hold&&detailIsCurrent(id,epoch))hold.innerHTML=`<div class="muted">候选差异读取失败：${esc(e.message)}</div>`;
+ }
+}
 
 function renderPromotionSummary(h){
  const box=$("#promotionCandidateList");
@@ -2119,7 +2388,8 @@ async function openPromoteDialog(version){
    const p=await api(`/api/beans/${encodeURIComponent(beanId)}/recipes/${encodeURIComponent(version)}/promote-preview`);
    if(!detailIsCurrent(beanId,epoch)||selectedPromoteBeanId!==beanId||selectedPromoteVersion!==version)return;
    const blockers=p.blockers||[];
-   $("#promoteGateBox").innerHTML=`<div><b>晋升门禁</b> ${p.can_promote?'<span class="status ok">可以设为当前版本</span>':'<span class="status bad">暂不可设为当前版本</span>'}</div>${blockers.length?`<div class="muted" style="margin-top:8px">${blockers.map(esc).join("；")}</div>`:'<div class="muted" style="margin-top:8px">内部校验与 xBloom 外部校验均已通过。</div>'}`;
+   const rollbackNote=p.is_rollback===true?`<div class="candidate-note">这是较早的一版：确认后当前版本会从 v${esc(p.current_version||"—")} 退回 v${esc(version)}。</div>`:"";
+   $("#promoteGateBox").innerHTML=rollbackNote+`<div><b>晋升门禁</b> ${p.can_promote?'<span class="status ok">可以设为当前版本</span>':'<span class="status bad">暂不可设为当前版本</span>'}</div>${blockers.length?`<div class="muted" style="margin-top:8px">${blockers.map(esc).join("；")}</div>`:'<div class="muted" style="margin-top:8px">内部校验与 xBloom 外部校验均已通过。</div>'}`;
    $("#promoteChanges").innerHTML=promotionChangesHTML(p.changes);
    $("#confirmPromoteBtn").disabled=!p.can_promote;
  }catch(e){
@@ -2134,16 +2404,17 @@ async function showHistory(){
  const h=await api(`/api/beans/${encodeURIComponent(id)}/history`);
  if(!detailIsCurrent(id,epoch))return;
  const versionCard=(x,kind)=>{const c=x.brew_card||{},r=c.recipe||{},p=r.pours||[];
-   const details=p.map((y,i)=>`<div class="muted">第 ${i+1} 段 · ${esc(y.ml)}ml · ${esc(y.temp_c)}℃ · ${esc(y.pattern||"—")} · ${esc(y.flow_ml_s)}ml/s · 等待 ${esc(y.pause_s||0)}s</div>`).join("");
-   return `<details class="v239-version-card"><summary><b>v${esc(x.version)}</b> · ${esc(c.dripper_label||"历史未记录滤杯")} · ${esc(kind)} ${String(h.current_version)===String(x.version)?'<b style="color:var(--ok)">· 当前</b>':''} ${stateBadge(x.readiness)}</summary><div class="muted">粉量 ${esc(r.dose_g??"—")}g · 研磨 ${esc(r.grind??"—")} · 水温 ${esc(r.temp_c??"—")}℃ · 总水量 ${esc(r.total_ml??"—")}ml · 粉水比 1:${esc(r.ratio??"—")}</div><div class="muted">来源 ${esc(c.engine||"历史未记录")} · ${esc(c.profile_id||"系统基准/历史记录")}</div>${referenceHTML(c.recipe_reference,c.recipe_reference_error)}${details}</details>`;
+   const details=p.map((y,i)=>`<div class="muted">第 ${i+1} 段 · ${esc(y.ml)}ml · ${esc(y.temp_c)}℃ · ${esc(zhPourPattern(y.pattern))} · ${esc(y.flow_ml_s)}ml/s · 等待 ${esc(y.pause_s||0)} 秒</div>`).join("");
+   return `<details class="v239-version-card"><summary><b>v${esc(x.version)}</b> · ${esc(c.dripper_label||"历史未记录滤杯")} · ${esc(zhVersionKind(kind))} ${String(h.current_version)===String(x.version)?'<b style="color:var(--ok)">· 当前</b>':''} ${stateBadge(x.readiness)}</summary><div class="muted">粉量 ${esc(r.dose_g??"—")}g · 研磨 ${esc(r.grind??"—")} · 水温 ${esc(r.temp_c??"—")}℃ · 总水量 ${esc(r.total_ml??"—")}ml · 粉水比 1:${esc(r.ratio??"—")}</div><div class="muted">${esc(zhEngineShort(c.engine))} · ${esc(c.dripper_label||"历史未记录滤杯")}</div>${details}</details>`;
  };
  let hhtml='<h3>原生版本</h3>';
- hhtml+=(h.native||[]).map(x=>versionCard(x,"Native")).join("")||'<div class="muted">无</div>';
+ hhtml+=(h.native||[]).map(x=>versionCard(x,"native")).join("")||'<div class="muted">无</div>';
  hhtml+='<h3 style="margin-top:14px">候选版本</h3>';
- hhtml+=(h.candidates||[]).map(x=>versionCard(x,"Candidate")).join("")||'<div class="muted">无</div>';
+ hhtml+=(h.candidates||[]).map(x=>versionCard(x,"candidate")).join("")||'<div class="muted">无</div>';
  $("#history").innerHTML=hhtml;
- renderPromotionSummary(h);
  renderVersionTimeline(h.timeline||[]);
+ highlightTimelineSummary(h.timeline||[]);
+ await loadVersionManager(h);
 }
 $("#historyBtn").onclick=showHistory;
 $("#backupBtn").onclick=async()=>{const r=await api("/api/backup",{method:"POST"});alert("备份完成："+r.backup)}
@@ -2250,7 +2521,8 @@ const manualIntakeFields=new Set();
 $("#newBeanForm").addEventListener("input",e=>{if(e.target.name)manualIntakeFields.add(e.target.name)});
 function referenceHTML(ref,error){
  if(error)return '<div class="muted">Collective 参考不可用；本版使用系统或 AI 来源。</div>';
- if(!ref)return '<div class="muted">未记录 Collective 匹配结果；不能据此判断无匹配。</div>';
+ /* v2.6.0：没有参考就不显示 —— 每版都重复一句「未记录」只是噪音 */
+ if(!ref)return "";
  return `<div class="muted">Collective · ${esc(({EXACT:"精确字段匹配参考",STRONG:"高相似参考",SIMILAR:"相似咖啡参考"})[ref.match_type]||ref.match_type)} · ${esc(ref.recipe_name||"未记录名称")}<br>${esc(ref.identity_note||"仅供参考，不保证同豆")}</div>`;
 }
 function renderIntakeCandidate(){
@@ -2821,10 +3093,28 @@ function xbAiHead(o){
  return `<div class="ai-recipe-head"><div class="ai-recipe-title"><span class="ai-owner">滤杯 ${esc(o.dripperLabel)}</span></div><span class="status ${esc(o.tone)}">${esc(o.statusLabel)}</span></div>`;
 }
 function xbAiParams(v){
- const cells=[["粉量",v.dose_g??"—","g"],["总水量",v.total_water_ml??"—","mL"],["水温",v.temperature_c??"—","℃"]];
- const grind=v.suggested_studio_grind_step??v.grind_step;
- if(grind!=null&&grind!=="")cells.push(["研磨",grind,"step"]);
- return `<div class="ai-param-grid cols-${cells.length}">`+cells.map(c=>`<div class="ai-param"><span>${esc(c[0])}</span><b>${esc(c[1])}</b><i>${esc(c[2])}</i></div>`).join("")+`</div>`;
+ // 设计稿定的四个参数：粉量 / 水温 / 粉水比 / 总水量。研磨不进这一屏（AI 不给研磨建议前不摆空位）。
+ const dose=v.dose_g, total=v.total_water_ml;
+ let ratio=v.ratio;
+ if(ratio==null&&dose&&total){const r=Number(total)/Number(dose);if(Number.isFinite(r))ratio=Math.round(r*10)/10;}
+ const cells=[["粉量",dose??"—","g"],["水温",v.temperature_c??"—","℃"],["粉水比",ratio!=null?"1:"+ratio:"—",""],["总水量",total??"—","mL"]];
+ return `<div class="ai-param-grid cols-4">`+cells.map(c=>`<div class="ai-param"><span>${esc(c[0])}</span><b>${esc(c[1])}</b><i>${esc(c[2])}</i></div>`).join("")+`</div>`;
+}
+/* AI 建议页的柱状注水：只用后端真有的字段（每段毫升数），占比由前端算出。
+   设计稿明确这一屏不放水温与水流方式 —— 不是因为后端没有，而是这一页只回答「水怎么分」。 */
+function xbAiBarGrid(v){
+ const list=Array.isArray(v&&v.pours_ml)?v.pours_ml.map(Number).filter(n=>Number.isFinite(n)&&n>0):[];
+ if(!list.length)return "";
+ const total=list.reduce((a,b)=>a+b,0);
+ const maxMl=Math.max(1,...list);
+ const cols=list.map((ml,i)=>{
+   /* 设计稿三段称「前段 / 中段 / 尾段」；段数不是 3 时退回序号，避免张冠李戴 */
+   const name=list.length===3?["前段","中段","尾段"][i]:(i===0?"闷蒸":`第 ${i+1} 段`);
+   const pct=total>0?Math.round(ml/total*1000)/10:0;
+   const h=Math.max(8,Math.round(ml/maxMl*132));
+   return `<div class="ai-bar-col"><div class="ai-bar-track"><div class="ai-bar-ml">${esc(ml)}<i class="param-u">mL</i></div><div class="ai-bar" style="height:${h}px" role="img" aria-label="${esc(name)} ${esc(ml)} 毫升，占比 ${pct}%"></div></div><div class="ai-bar-name">${esc(name)}</div><div class="ai-bar-pct">占 ${pct}%</div></div>`;
+ }).join("");
+ return `<div class="ai-bar-grid">${cols}</div>`;
 }
 function xbAiPending(key,message,state){
  const s=xbAiState(state||"checking");
@@ -2908,16 +3198,32 @@ function xbAiReadabilityHTML(v){
   `</div>`;
 }
 // ==== v1.5 P1 end ====
+function xbSetAiStatus(text){if(typeof document==="undefined"||!document.getElementById)return;const el=document.getElementById("aiAdviceStatus");if(!el)return;const lab=el.querySelector("span");if(lab)lab.textContent=text;else el.textContent=text;}
 function xbAiReady(o){
+ xbSetAiStatus("AI 研究配方已生成");
  const v=o.v,item=o.item,ev=(v&&v.parameter_evidence)||{};
  const evRows=Object.keys(ev).map(k=>`<div class="ai-evidence-row"><span>${esc(k)}</span><p>${esc(String(ev[k]))}</p></div>`).join("");
  const when=String(item.generated_at||"").replace("T"," ").slice(0,19);
- return `${xbAiHead({dripperLabel:o.dripperLabel,tone:"ok",statusLabel:o.cached?"已验证缓存":"新生成"})}`+
-  `${xbAiParams(v)}`+
-  `<div class="ai-pours-row"><span>分段注水</span><b>${xbAiPoursText(v.pours_ml)}</b><i>mL</i></div>`+
-  `${xbAiReadabilityHTML(v)}`+
+ const status=o.cached?"已验证缓存":"新生成";
+ const bandBody=(()=>{
+   const f=xbAiFlavorBands(v);
+   if(!f)return '<div class="muted">这份配方没有可推算的分段水量。</div>';
+   const bands=f.bands.map(b=>`<div class="ai-band"><span>${esc(b.label)} · ${esc(b.ml)} mL</span><b>${esc(b.pct)}%</b><div class="ai-band-bar"><i style="width:${Math.min(100,Math.max(2,b.pct))}%"></i></div><p>${esc(b.note)}</p></div>`).join("");
+   return `<div class="ai-band-grid">${bands}</div>`+
+     `<div class="ai-read-note">粉水比 ${esc(f.ratio!=null?"1:"+f.ratio:"—")} · 水温 ${esc(f.temp==null?"—":f.temp+"℃")} · 分段合计 ${esc(f.total)} mL。占比由你这份配方的水量分布直接算出，不是模型写的风味描述。</div>`;
+ })();
+ const routeBody=(()=>{
+   const routes=xbAiTasteRoutes(v).map(r=>`<div class="ai-route"><span class="ai-route-sym">${esc(r.sym)}</span><div class="ai-route-body"><b>${esc(r.lever)}</b><p>${esc(r.change)}</p><p>${esc(r.note)}</p></div></div>`).join("");
+   return `<div class="ai-routes">${routes}</div><div class="ai-read-note">三条路线都只改一个参数，方便判断是哪一步起的作用。研磨相关建议需在机器上手动执行，本站不代为下发。</div>`;
+ })();
+ return `<div class="muted">归属滤杯 ${esc(o.dripperLabel||"—")} · ${esc(status)}${when?" · "+esc(when):""}</div>`+
   `<p class="ai-safety">研究参考配方，未经机器校准，不可直接执行或同步。</p>`+
-  `<details class="ai-evidence"><summary>查看 AI 生成依据</summary><div class="ai-evidence-body">`+
+  `${xbAiParams(v)}`+
+  `<div class="xb-sub-label">分段注水</div>`+
+  `${xbAiBarGrid(v)}`+
+  `<details class="xb-fold"><summary>冲出来会是什么结构<span class="xb-fold-hint">按参数推算 · 未经杯测</span></summary><div class="xb-fold-body">${bandBody}</div></details>`+
+  `<details class="xb-fold"><summary>出问题怎么调（每次只动一个变量）<span class="xb-fold-hint">经验建议 · 未实机验证</span></summary><div class="xb-fold-body">${routeBody}</div></details>`+
+  `<details class="xb-fold"><summary>查看 AI 生成依据<span class="xb-fold-hint">模型、来源、缓存</span></summary><div class="xb-fold-body">`+
    `<div class="ai-evidence-block"><b>AI 生成理由（模型原文，未翻译）</b><p class="ai-rationale">${esc(v.rationale||"（模型未提供理由）")}</p></div>`+
    `<div class="ai-evidence-block"><b>模型与来源</b><div>模型 ${esc(item.model_id||"—")} · ${esc(o.cached?"读取已验证缓存":"本次新生成")}${when?" · "+esc(when):""}</div><div>上游响应 ${esc(item.upstream_response_id||"—")}</div><div>契约 ${esc(item.contract_version||"—")} · 生成器 ${esc(item.generator_version||"—")} · Prompt ${esc(item.prompt_version||"—")} · 校验器 ${esc(item.validator_version||"—")}</div></div>`+
    `<div class="ai-evidence-block"><b>硬件校准状态</b><div>配方状态 ${esc(v.status||"research_only")} · machine_parameters_calibrated=${v.machine_parameters_calibrated===true?"true":"false"}</div><div>机器配方 ${item.machine_recipe?"存在":"无"} · 实物安装 ${item.machine_mount_verified?"已验证":"未验证"} · 机器程序 ${item.machine_program_ready?"就绪":"未就绪"}</div></div>`+
@@ -2938,7 +3244,7 @@ async function xbShowFirstRecipe(opts){
  const request=fromPanel?++xbDripperBaselineRequest:++xbFirstRecipeRequest, key=o.dripper||((picker&&picker.value)||"omni2");
  const isStale=()=>fromPanel?(request!==xbDripperBaselineRequest):(request!==xbFirstRecipeRequest||selected?.bean_id!==beanId);
  box.textContent="正在匹配咖啡豆与滤杯的第一配方…";
- if(aiBox){aiBox.className="ai-recipe-card flat";aiBox.style.marginTop="12px";aiBox.innerHTML=xbAiPending(key,"正在检查已验证缓存…","checking");}
+ if(aiBox){aiBox.className="ai-recipe-card flat";aiBox.style.marginTop="12px";aiBox.innerHTML=xbAiPending(key,"正在检查已验证缓存…","checking");xbSetAiStatus("正在检查 AI 研究配方…");}
  const validAi=()=>request===xbFirstRecipeRequest&&selected?.bean_id===beanId&&((($("#extractionDripperSelect")||{}).value)||"omni2")===key;
  try{
    const data=await api(`/api/beans/${encodeURIComponent(beanId)}/first-recipe?dripper=${encodeURIComponent(key)}`);
@@ -2996,12 +3302,12 @@ async function xbShowFirstRecipe(opts){
          return;
        }
        if(result.status!=="ready"){
-         holder.innerHTML=xbAiPending(key,"AI 正在根据咖啡豆与滤杯生成第一配方…（模型生成可能需要十余秒；可继续浏览）","generating");
+         holder.innerHTML=xbAiPending(key,"AI 正在根据咖啡豆与滤杯生成第一配方…（模型生成可能需要十余秒；可继续浏览）","generating");xbSetAiStatus("AI 研究配方生成中…");
          result=await api(`/api/beans/${encodeURIComponent(beanId)}/ai-first-auto`,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({dripper:key})});
        }
        if(!valid())return;
        if(result.status!=="ready"||!result.recipe?.validated_first_recipe){
-         holder.innerHTML=xbAiFail(key,{title:"AI 第一配方暂不可用",hint:"服务未返回可展示的研究配方，本次结果未采用。",retry:true,code:null});
+         xbSetAiStatus("AI 研究配方不可用");holder.innerHTML=xbAiFail(key,{title:"AI 第一配方暂不可用",hint:"服务未返回可展示的研究配方，本次结果未采用。",retry:true,code:null});
          return;
        }
        const item=result.recipe||{},v=item.validated_first_recipe||{};
@@ -3010,7 +3316,7 @@ async function xbShowFirstRecipe(opts){
        if(typeof xbSyncAiBrewEntry==="function")xbSyncAiBrewEntry();
      }catch(err){
        if(!valid())return;
-       holder.innerHTML=xbAiFail(key,xbAiErrorInfo(err));
+       xbSetAiStatus("AI 研究配方不可用");holder.innerHTML=xbAiFail(key,xbAiErrorInfo(err));
      }
    };
    if(data.match_confidence==="unavailable"){
@@ -3085,6 +3391,8 @@ function xbSetDripperStatus(key,data){
  }
  chip.className="status-chip "+tone;
  chip.textContent=text;
+ /* v2.5.1：正常态（tone=ok 且无提示）不占位 —— 设计稿顶部只有下拉框，状态交给下方状态行表达 */
+ if(chip.style)chip.style.display=(tone==="ok"&&!hint)?"none":"";
  if(hint){
    chip.title=hint;
    if(chip.style)chip.style.cursor="pointer";
@@ -3558,6 +3866,25 @@ $('#extractionProfileDetails').addEventListener('toggle',e=>{if(e.target.open)xb
 </script>
 
 
+<script>
+/* v2.5.0：标签、折叠与状态行的绑定（脚本末尾执行，DOM 已就绪） */
+(function(){
+ if(typeof document==="undefined"||!document.getElementById)return;
+ const tc=document.getElementById("extractTabCurrent"),ta=document.getElementById("extractTabAi");
+ if(tc)tc.addEventListener("click",()=>xbExtractTab("current"));
+ if(ta)ta.addEventListener("click",()=>xbExtractTab("ai"));
+ const go=document.getElementById("xbGoAdjustBtn");
+ if(go)go.addEventListener("click",()=>{if(typeof showDetailPane==="function")showDetailPane("adjust");});
+ /* 状态行跟随真实数据：校验结果与云端徽章由多处代码写入，用观察者保证不漏 */
+ const vbox=document.getElementById("validationBox"),cbox=document.getElementById("cloudSyncBadge");
+ if(vbox&&cbox&&typeof MutationObserver!=="undefined"){
+   const obs=new MutationObserver(()=>xbUpdateExtractStatus());
+   obs.observe(vbox,{childList:true,subtree:true,characterData:true});
+   obs.observe(cbox,{childList:true,subtree:true,characterData:true,attributes:true,attributeFilter:["class"]});
+   xbUpdateExtractStatus();
+ }
+})();
+</script>
 
 <script id="XB_IOS_P1_V012">
 (function(){
@@ -3791,6 +4118,6 @@ $('#extractionProfileDetails').addEventListener('toggle',e=>{if(e.target.open)xb
 })();
 </script>
 
-<script>/* XB_IOS_V021_REBASE: v1.9.2 type scale + v0.2.1 iOS shims. Server editor uses an inline panel (no prompt()). */</script>
+<script>/* XB_IOS_V030_REBASE: 2.6.0 baseline + v0.3.0 iOS shims. Server editor uses an inline panel (no prompt()). */</script>
 </body>
 </html>

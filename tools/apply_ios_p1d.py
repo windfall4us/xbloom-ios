@@ -22,14 +22,34 @@ if marker in s:
 prereq = [
     'XB_IOS_P0', 'XB_IOS_P1_V012', 'XB_IOS_P0B_V013', 'XB_IOS_P1C_V014',
     'id="detailExtractionPane"', 'id="detailAdjustPane"',
-    'id="extractMetricCards"', 'id="pourCards"', 'id="readyBadge"',
+    'id="extractMetricCards"', 'id="pourCards"',
     'id="extractionDripperSelect"', 'id="adaptDripperBtn"',
     'id="latestTastingBox"', 'id="adjustAdviceBox"',
     'id="reason"', 'id="nextRows"', 'id="recordTastingTopBtn"',
-    'id="versionManagementDetails"', 'id="tastingHistoryDetails"', 'id="timelineDetails"',
+    'id="tastingHistoryDetails"', 'id="timelineDetails"',
 ]
 missing = [key for key in prereq if key not in s]
 if missing: sys.exit('FAIL: missing P1D requirements: ' + repr(missing))
+# v0.3.0: the 2.6.0 base renamed two anchors, so the status/version anchors are
+# resolved as alternatives instead of being dropped -- one of each pair must exist,
+# otherwise this patch (and the style it adds) would silently address nothing.
+ALT = {
+    'readyBadge': ('id="readyBadge"', 'id="extractStatusRow"'),
+    'versionManagement': ('id="versionManagementDetails"', 'id="versionManagerSummary"'),
+}
+status_id = version_id = None
+for key, (old_id, new_id) in ALT.items():
+    if old_id in s:
+        hit = key
+    elif new_id in s:
+        hit = key + '-260'
+    else:
+        sys.exit('FAIL: neither %s nor %s present (status/version anchor)' % (old_id, new_id))
+    if key == 'readyBadge':
+        status_id = hit
+    else:
+        version_id = hit
+print('anchors:', status_id, version_id)
 if s.count('</head>') != 1 or s.count('</body>') != 1:
     sys.exit('FAIL: unexpected document boundaries')
 if "classList.add('ios-app')" not in s and 'classList.add("ios-app")' not in s:
@@ -65,7 +85,8 @@ css = r'''<style id="XB_IOS_P1D_V015">
     font-size:12px;line-height:1.4;overflow-wrap:anywhere;
   }
   /* Current version, dripper and Ready stay visible: no data is hidden. */
-  html.xb-ios-p0 body.ios-app #readyBadge{flex-shrink:0;max-width:100%;}
+  html.xb-ios-p0 body.ios-app #readyBadge,
+  html.xb-ios-p0 body.ios-app #extractStatusRow{flex-shrink:0;max-width:100%;flex-wrap:wrap;}
   html.xb-ios-p0 body.ios-app #detailExtractionPane .session-dripper{
     display:grid;grid-template-columns:minmax(0,1fr);gap:7px;margin-top:11px;
   }
