@@ -15,7 +15,7 @@ h1,h2,h3{margin:0}h1{font-size:var(--fs-display);line-height:var(--lh-display);f
 button{font:inherit}.action{border:0;border-radius:10px;padding:10px 13px;background:var(--accent);color:white;font-weight:700;cursor:pointer}.secondary{background:#eee6dc;color:#5d5047;border:1px solid #ddd0c2}
 .tabs{display:flex;gap:8px;margin:14px 0}.tab{border:1px solid var(--line);background:white;border-radius:999px;padding:8px 12px}.tab.active{background:var(--soft);border-color:#c3a187}
 .search{width:100%;padding:11px;border:1px solid var(--line);border-radius:12px;background:white;font:inherit;margin-bottom:14px}
-.warehouse{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}.bean-card{background:var(--panel);border:1px solid var(--line);border-radius:17px;overflow:hidden;cursor:pointer;display:flex;flex-direction:column}
+.warehouse{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}.warehouse-empty{grid-column:1/-1;background:var(--panel);border:1px dashed var(--line);border-radius:17px;padding:28px 18px;text-align:center;line-height:1.6}.bean-card{background:var(--panel);border:1px solid var(--line);border-radius:17px;overflow:hidden;cursor:pointer;display:flex;flex-direction:column}
 .bean-img{width:100%;aspect-ratio:4/3;object-fit:cover;background:#eee7de}.img-placeholder{aspect-ratio:4/3;display:flex;align-items:center;justify-content:center;background:#eee7de;color:#9a9087}.bean-body{padding:14px}
 .bean-title{display:flex;justify-content:space-between;gap:10px}.bean-title b{font-size:var(--fs-section)}.tags{display:flex;gap:6px;flex-wrap:wrap;margin:10px 0}.tag{background:#f4ece3;border:1px solid #e6d8c9;border-radius:999px;padding:5px 8px;font-size:var(--fs-caption)}
 .intro{font-size:var(--fs-body);color:#5f5750;line-height:1.55;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
@@ -789,7 +789,7 @@ html.xb-ios-p0 body.ios-app #xbP2BViewer .xb-p2b-hint{position:absolute;bottom:m
 @media(prefers-reduced-motion:reduce){html.xb-ios-p0 body.ios-app #xbP2BViewer *{transition:none!important}}
 </style>
 
-<style id="XB_IOS_V030_REBASE">
+<style id="XB_IOS_V031_REBASE">
 /* iOS-only alignment after the v1.9.2 type scale. Additive: every rule is gated on
    html.xb-ios-p0 body.ios-app, and no rule overrides a font-size token -- the App
    must render on the same 7-step scale as the web. */
@@ -1046,11 +1046,13 @@ html.xb-ios-p0 body.ios-app .param-cell{padding:12px 6px}
       <div class="muted" id="aiBrewEntryHint" style="margin-top:8px">先在「萃取」页加载 AI 配方。</div>
     </div>
   </details>
- </main>
-</section>
+  </main>
+  </section>
+  </div>
+  </section>
 
 
-<dialog id="promoteDialog" style="border:0;border-radius:16px;padding:0;max-width:760px;width:calc(100% - 24px)">
+  <dialog id="promoteDialog" style="border:0;border-radius:16px;padding:0;max-width:760px;width:calc(100% - 24px)">
  <div class="card">
   <h3>设为当前版本</h3>
   <div class="muted" id="promoteIntro" style="margin-top:6px">正在检查候选配方…</div>
@@ -1381,7 +1383,7 @@ html.xb-ios-p0 body.ios-app .param-cell{padding:12px 6px}
 <script>
 const $=s=>document.querySelector(s);
 
-/* XB_IOS_V030_SHIM - Capacitor API endpoint adapter + iOS-safe server editor.
+/* XB_IOS_V031_SHIM - Capacitor API endpoint adapter + iOS-safe server editor.
    Sizes use the page type tokens so the App shares the web's 7-step scale. */
 const XB_SERVER_KEY='xbloom_ios_server_url';
 function xbReadServer(){let s=localStorage.getItem(XB_SERVER_KEY)||'';return s.replace(/\/+$/,'');}
@@ -1492,6 +1494,16 @@ function stateBadge(r){
 }
 function renderWarehouse(list){
  $("#stats").textContent=`共 ${list.length} 款豆`;
+ if(!list.length){
+   const q=$("#search").value.trim();
+   const msg=q?`没有匹配「${esc(q)}」的咖啡豆。`:
+     currentFilter==="resting"?"现在没有正在养豆的咖啡豆。填写烘焙日期与烘焙度后，系统会自动判断养豆期。":
+     currentFilter==="archived"?"没有已归档的咖啡豆。归档入口在豆详情页右上角。":
+     currentFilter==="drinking"?"没有在喝的咖啡豆，可以在「全部」里查看其它状态。":
+     "豆仓还是空的，点底部「新增」录入第一款咖啡豆。";
+   $("#warehouse").innerHTML=`<div class="warehouse-empty muted">${msg}</div>`;
+   return;
+ }
  $("#warehouse").innerHTML=list.map(b=>`<article class="bean-card" data-id="${esc(b.bean_id)}">
  ${b.image_url?`<img class="bean-img" src="${esc(absURL(b.image_url))}" alt="${esc(b.name)}包装">`:`<div class="img-placeholder">暂无图片</div>`}
  <div class="bean-body"><div class="bean-title"><b>${esc(b.sample_no)} · ${esc(b.name)}</b><span class="muted">${esc(labelRoast(b.roast_level))}</span></div>
@@ -4118,6 +4130,6 @@ $('#extractionProfileDetails').addEventListener('toggle',e=>{if(e.target.open)xb
 })();
 </script>
 
-<script>/* XB_IOS_V030_REBASE: 2.6.0 baseline + v0.3.0 iOS shims. Server editor uses an inline panel (no prompt()). */</script>
+<script>/* XB_IOS_V031_REBASE: 2.6.1 baseline + v0.3.1 iOS shims. Server editor uses an inline panel (no prompt()). */</script>
 </body>
 </html>
