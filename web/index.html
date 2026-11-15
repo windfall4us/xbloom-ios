@@ -789,7 +789,7 @@ html.xb-ios-p0 body.ios-app #xbP2BViewer .xb-p2b-hint{position:absolute;bottom:m
 @media(prefers-reduced-motion:reduce){html.xb-ios-p0 body.ios-app #xbP2BViewer *{transition:none!important}}
 </style>
 
-<style id="XB_IOS_V031_REBASE">
+<style id="XB_IOS_V032_REBASE">
 /* iOS-only alignment after the v1.9.2 type scale. Additive: every rule is gated on
    html.xb-ios-p0 body.ios-app, and no rule overrides a font-size token -- the App
    must render on the same 7-step scale as the web. */
@@ -1305,6 +1305,16 @@ html.xb-ios-p0 body.ios-app .param-cell{padding:12px 6px}
       </div>
 
       <div class="validation">
+        <b>写操作口令</b>
+        <div class="row"><span>当前</span><span id="authStateLabel">读取中</span></div>
+        <div class="muted" style="margin-top:8px;line-height:1.6">只锁写，不锁读：豆仓、萃取、调整、同步页照常看；改配方、改设置、AI 生成、推云端需要口令。留空表示不启用。</div>
+        <div class="form-field" style="margin-top:10px"><label for="authPasscodeInput">设置/更新口令</label><input id="authPasscodeInput" type="password" autocomplete="new-password" placeholder="至少 4 位；留空不改"></div>
+        <div class="form-field"><label for="authCurrentInput">当前口令（改或取消时要填）</label><input id="authCurrentInput" type="password" autocomplete="current-password" placeholder="首次设置不用填"></div>
+        <div class="actions"><button class="action secondary" id="authSaveBtn" type="button">保存口令</button><button class="action secondary" id="authClearBtn" type="button">取消口令</button></div>
+        <div class="muted" id="authMsg" style="margin-top:8px"></div>
+      </div>
+
+      <div class="validation">
         <b>系统说明</b>
         <div class="muted" style="margin-top:8px;line-height:1.6">
           Native Recipe SSOT → Internal Validation → xbloom validate → Current
@@ -1383,7 +1393,7 @@ html.xb-ios-p0 body.ios-app .param-cell{padding:12px 6px}
 <script>
 const $=s=>document.querySelector(s);
 
-/* XB_IOS_V031_SHIM - Capacitor API endpoint adapter + iOS-safe server editor.
+/* XB_IOS_V032_SHIM - Capacitor API endpoint adapter + iOS-safe server editor.
    Sizes use the page type tokens so the App shares the web's 7-step scale. */
 const XB_SERVER_KEY='xbloom_ios_server_url';
 function xbReadServer(){let s=localStorage.getItem(XB_SERVER_KEY)||'';return s.replace(/\/+$/,'');}
@@ -1465,9 +1475,82 @@ const rules=[
 {id:"aroma",t:"香气不足",d:"杯子干净但偏平",n:{grindDelta:-1,tempDelta:1,main1FlowDelta:.15},r:"稍细研磨、升温并略提高Main 1流速。"}
 ];
 
+/* ==== 2.6.3 写操作口令 ====
+   只锁写不锁读：GET 不需要令牌；任何非 GET 若服务端设了口令，都会 401 AUTH_REQUIRED。
+   令牌存 localStorage，由 api() 统一注入请求头——浏览器和 iOS App 共用这一处，
+   所以不需要改任何调用点（App 的页面也是从这份 index.html 生成的）。 */
+const XB_AUTH_TOKEN_KEY='xbloom_auth_token';
+function xbAuthToken(){try{return localStorage.getItem(XB_AUTH_TOKEN_KEY)||''}catch(e){return ''}}
+function xbSetAuthToken(t){try{t?localStorage.setItem(XB_AUTH_TOKEN_KEY,t):localStorage.removeItem(XB_AUTH_TOKEN_KEY)}catch(e){}}
+function xbAuthHeaders(opt){
+ const o=Object.assign({},opt||{});
+ const h=Object.assign({},(o.headers||{}));
+ const t=xbAuthToken();
+ if(t)h['X-XBloom-Token']=t;
+ o.headers=h;
+ return o;
+}
+function xbAuthPanel(msg,cb){
+ const back=document.createElement('div');
+ back.id='xbAuthPanel';
+ back.style.cssText='position:fixed;inset:0;z-index:10002;background:rgba(30,24,20,.42);display:flex;align-items:center;justify-content:center;padding:16px';
+ const box=document.createElement('div');
+ box.style.cssText='background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:16px;width:100%;max-width:360px;box-shadow:0 12px 32px rgba(0,0,0,.22)';
+ const h=document.createElement('div');
+ h.textContent='需要口令';
+ h.style.cssText='font-size:var(--fs-section);font-weight:700;margin-bottom:6px';
+ const d=document.createElement('div');
+ d.textContent=msg||'这个部署给写操作设置了口令，输一次就行（之后本站记住）。';
+ d.className='muted';
+ d.style.cssText='line-height:1.55;margin-bottom:10px';
+ const inp=document.createElement('input');
+ inp.type='password'; inp.autocomplete='current-password'; inp.placeholder='写操作口令';
+ inp.style.cssText='width:100%;height:44px;border:1px solid var(--line);border-radius:12px;background:#fff;color:var(--text);font-size:var(--fs-body-lg);padding:0 12px';
+ const row=document.createElement('div');
+ row.className='actions';
+ row.style.cssText='margin-top:12px;display:flex;gap:8px';
+ const ok=document.createElement('button');
+ ok.className='action'; ok.type='button'; ok.textContent='确定'; ok.style.flex='1';
+ const cancel=document.createElement('button');
+ cancel.className='action secondary'; cancel.type='button'; cancel.textContent='取消'; cancel.style.flex='1';
+ row.appendChild(ok); row.appendChild(cancel);
+ box.appendChild(h); box.appendChild(d); box.appendChild(inp); box.appendChild(row);
+ back.appendChild(box);
+ document.body.appendChild(back);
+ function done(v){if(back.parentNode)back.parentNode.removeChild(back);cb(v)}
+ ok.onclick=()=>done(inp.value.trim());
+ cancel.onclick=()=>done('');
+ inp.onkeydown=e=>{if(e.key==='Enter'){e.preventDefault();done(inp.value.trim())}else if(e.key==='Escape'){done('')}};
+ setTimeout(()=>inp.focus(),30);
+}
+async function xbAuthLogin(passcode){
+ const r=await fetch('/api/auth/login',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({passcode})});
+ let body=null; try{body=await r.json()}catch(e){}
+ if(!r.ok){
+   const m=(body&&body.detail&&body.detail.message)||'口令不正确';
+   throw new Error(m);
+ }
+ xbSetAuthToken(body.token||'');
+ return body.token||'';
+}
 async function api(url,opt){
  url=absURL(url);
- const r=await fetch(url,opt);
+ let r=await fetch(url,xbAuthHeaders(opt));
+ if(r.status===401){
+   let code=null;
+   try{const j=await r.clone().json();code=j&&j.detail&&j.detail.code}catch(e){}
+   // 最多问两次：第一次可能输错，输错就把错误写在面板里再问一次，不用 alert（会卡住页面）
+   for(let attempt=0;code==='AUTH_REQUIRED'&&attempt<2;attempt++){
+     const entered=await new Promise(res=>xbAuthPanel(attempt?'口令不正确，再试一次。':'',res));
+     if(!entered)break;
+     try{await xbAuthLogin(entered);}catch(e){
+       if(attempt===1)throw e;
+       continue;
+     }
+     r=await fetch(url,xbAuthHeaders(opt));
+     try{const j=await r.clone().json();code=(r.status===401&&j&&j.detail&&j.detail.code)||null}catch(e){code=null}
+   }
+ }
  if(!r.ok){
    let msg=await r.text(),detail=msg;
    try{const j=JSON.parse(msg);detail=typeof j.detail==="string"?j.detail:(j.detail??j);msg=typeof j.detail==="string"?j.detail:JSON.stringify(j.detail)}catch(e){}
@@ -3033,7 +3116,7 @@ async function openSettingsDialog(){
  }
 }
 
-$("#navSettingsBtn").onclick=()=>{setBottomNavActive("navSettingsBtn");openSettingsDialog();};
+$("#navSettingsBtn").onclick=()=>{setBottomNavActive("navSettingsBtn");openSettingsDialog();if(typeof xbRefreshAuthState==="function")xbRefreshAuthState();};
 $("#settingsBackBtn").onclick=showWarehouseView;
 
 $("#settingsAiTab").onclick=()=>showSettingsPane("ai");
@@ -3673,6 +3756,42 @@ $("#resetRestingBtn").onclick=async()=>{
     alert("已恢复默认养豆规则。");
   }catch(e){ alert("恢复默认失败："+e.message); }
 };
+async function xbAuthFetch(path,init){
+ const h=Object.assign({'Content-Type':'application/json'},xbAuthToken()?{'X-XBloom-Token':xbAuthToken()}:{});
+ const r=await fetch(path,Object.assign({},init||{},{headers:h}));
+ let j=null; try{j=await r.json()}catch(e){}
+ return {ok:r.ok,j:j};
+}
+async function xbRefreshAuthState(){
+ const box=$("#authStateLabel"); if(!box)return;
+ try{
+   const st=await fetch('/api/auth/status').then(r=>r.json());
+   box.textContent=st.enabled?'已启用（写操作需要口令）':'未启用（所有操作开放）';
+ }catch(e){box.textContent='读取失败';}
+}
+async function xbSavePasscode(){
+ const p=$("#authPasscodeInput").value.trim();
+ const cur=$("#authCurrentInput").value;
+ const msg=$("#authMsg");
+ if(p.length<4){msg.textContent='口令至少 4 位。';return}
+ const r=await xbAuthFetch('/api/auth/passcode',{method:'POST',body:JSON.stringify({passcode:p,current:cur||null})});
+ if(!r.ok){msg.textContent=(r.j&&r.j.detail&&r.j.detail.message)||'保存失败';return}
+ xbSetAuthToken((r.j&&r.j.token)||'');
+ $("#authPasscodeInput").value='';$("#authCurrentInput").value='';
+ msg.textContent='已保存，本站已记住口令。';
+ xbRefreshAuthState();
+}
+async function xbClearPasscode(){
+ const cur=$("#authCurrentInput").value;
+ const msg=$("#authMsg");
+ const r=await xbAuthFetch('/api/auth/passcode',{method:'DELETE',body:JSON.stringify({passcode:'',current:cur||null})});
+ if(!r.ok){msg.textContent=(r.j&&r.j.detail&&r.j.detail.message)||'取消失败';return}
+ xbSetAuthToken('');
+ msg.textContent='已取消口令，写操作重新开放。';
+ xbRefreshAuthState();
+}
+if($("#authSaveBtn"))$("#authSaveBtn").onclick=xbSavePasscode;
+if($("#authClearBtn"))$("#authClearBtn").onclick=xbClearPasscode;
 $("#statusRefreshBtn").onclick=loadSystemStatus;
 $("#closeSettingsStatusBtn").onclick=showWarehouseView;
 
@@ -4130,6 +4249,6 @@ $('#extractionProfileDetails').addEventListener('toggle',e=>{if(e.target.open)xb
 })();
 </script>
 
-<script>/* XB_IOS_V031_REBASE: 2.6.1 baseline + v0.3.1 iOS shims. Server editor uses an inline panel (no prompt()). */</script>
+<script>/* XB_IOS_V032_REBASE: 2.6.3 baseline + v0.3.2 iOS shims. Server editor uses an inline panel (no prompt()). */</script>
 </body>
 </html>
